@@ -1,0 +1,27 @@
+{
+  "description": "Pharmacy receipt: OTC medications at 19%, prescription drugs at 7%",
+  "blocks": [
+    {"text": "Apotheke am Rathaus", "x": 5.0, "y": 3.0, "width": 38.0, "height": 3.0, "confidence": 0.97},
+    {"text": "Rathausplatz 2, 50667 Köln", "x": 5.0, "y": 7.0, "width": 42.0, "height": 2.5, "confidence": 0.96},
+    {"text": "USt-IdNr.: DE678901234", "x": 5.0, "y": 11.0, "width": 38.0, "height": 2.5, "confidence": 0.95},
+    {"text": "12.05.2026", "x": 5.0, "y": 15.0, "width": 25.0, "height": 2.5, "confidence": 0.97},
+    {"text": "Ibuprofen 400mg (Rx)", "x": 5.0, "y": 38.0, "width": 45.0, "height": 2.5, "confidence": 0.94},
+    {"text": "12,50", "x": 80.0, "y": 38.0, "width": 15.0, "height": 2.5, "confidence": 0.96},
+    {"text": "Vitamin C 500mg", "x": 5.0, "y": 42.0, "width": 38.0, "height": 2.5, "confidence": 0.96},
+    {"text": "6,99", "x": 80.0, "y": 42.0, "width": 15.0, "height": 2.5, "confidence": 0.97},
+    {"text": "davon 7% MwSt 0,82", "x": 5.0, "y": 68.0, "width": 40.0, "height": 2.5, "confidence": 0.95},
+    {"text": "davon 19% MwSt 1,11", "x": 5.0, "y": 72.0, "width": 40.0, "height": 2.5, "confidence": 0.95},
+    {"text": "Summe", "x": 5.0, "y": 77.0, "width": 20.0, "height": 3.0, "confidence": 0.98},
+    {"text": "19,49", "x": 80.0, "y": 77.0, "width": 15.0, "height": 3.0, "confidence": 0.98}
+  ],
+  "expected": {
+    "vendor_name": "Apotheke am Rathaus",
+    "date": "2026-05-12",
+    "tax_id": "DE678901234",
+    "total_amount": 1949,
+    "vat_breakdown": [
+      {"rate": 7, "tax_cents": 82},
+      {"rate": 19, "tax_cents": 111}
+    ]
+  }
+}

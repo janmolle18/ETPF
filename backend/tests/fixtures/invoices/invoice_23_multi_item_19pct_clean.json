@@ -1,0 +1,38 @@
+{
+  "description": "Clean 19% invoice with multiple line items and exact consistency check",
+  "blocks": [
+    {"text": "IT Solutions Deutschland GmbH", "x": 5.0, "y": 3.0, "width": 50.0, "height": 3.0, "confidence": 0.99},
+    {"text": "Friedrichstraße 100, 10117 Berlin", "x": 5.0, "y": 7.0, "width": 52.0, "height": 2.5, "confidence": 0.99},
+    {"text": "USt-IdNr.: DE100200300", "x": 5.0, "y": 11.0, "width": 38.0, "height": 2.5, "confidence": 0.99},
+    {"text": "Steuernummer: 11/222/33445", "x": 5.0, "y": 15.0, "width": 40.0, "height": 2.5, "confidence": 0.99},
+    {"text": "Rechnungsnummer: IT-2024-888", "x": 5.0, "y": 19.0, "width": 44.0, "height": 2.5, "confidence": 0.99},
+    {"text": "Datum: 01.08.2024", "x": 5.0, "y": 23.0, "width": 30.0, "height": 2.5, "confidence": 0.99},
+    {"text": "Server Rack 42HE", "x": 5.0, "y": 38.0, "width": 42.0, "height": 2.5, "confidence": 0.99},
+    {"text": "2 x 450,00", "x": 55.0, "y": 38.0, "width": 22.0, "height": 2.5, "confidence": 0.99},
+    {"text": "900,00", "x": 80.0, "y": 38.0, "width": 15.0, "height": 2.5, "confidence": 0.99},
+    {"text": "Patchkabel Cat6 10er", "x": 5.0, "y": 42.0, "width": 44.0, "height": 2.5, "confidence": 0.99},
+    {"text": "3 x 24,99", "x": 55.0, "y": 42.0, "width": 22.0, "height": 2.5, "confidence": 0.99},
+    {"text": "74,97", "x": 80.0, "y": 42.0, "width": 15.0, "height": 2.5, "confidence": 0.99},
+    {"text": "Switch 24-Port", "x": 5.0, "y": 46.0, "width": 38.0, "height": 2.5, "confidence": 0.99},
+    {"text": "1 x 349,00", "x": 55.0, "y": 46.0, "width": 22.0, "height": 2.5, "confidence": 0.99},
+    {"text": "349,00", "x": 80.0, "y": 46.0, "width": 15.0, "height": 2.5, "confidence": 0.99},
+    {"text": "Nettobetrag", "x": 5.0, "y": 66.0, "width": 28.0, "height": 2.5, "confidence": 0.99},
+    {"text": "1.323,97", "x": 80.0, "y": 66.0, "width": 15.0, "height": 2.5, "confidence": 0.99},
+    {"text": "MwSt 19% 251,55", "x": 5.0, "y": 70.0, "width": 38.0, "height": 2.5, "confidence": 0.99},
+    {"text": "Gesamtbetrag", "x": 5.0, "y": 75.0, "width": 30.0, "height": 3.0, "confidence": 0.99},
+    {"text": "1.575,52", "x": 80.0, "y": 75.0, "width": 15.0, "height": 3.0, "confidence": 0.99}
+  ],
+  "expected": {
+    "vendor_name": "IT Solutions Deutschland GmbH",
+    "date": "2024-08-01",
+    "invoice_number": "IT-2024-888",
+    "tax_id": "DE100200300",
+    "steuernummer": "11/222/33445",
+    "total_amount": 157552,
+    "tax_amount": 25155,
+    "net_amount": 132397,
+    "vat_breakdown": [
+      {"rate": 19, "tax_cents": 25155}
+    ]
+  }
+}

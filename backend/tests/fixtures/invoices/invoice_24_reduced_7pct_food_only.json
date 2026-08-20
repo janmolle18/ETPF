@@ -1,0 +1,31 @@
+{
+  "description": "Purely 7% food invoice (bakery/butcher), no 19% items",
+  "blocks": [
+    {"text": "Bäckerei & Konditorei Schmitt", "x": 5.0, "y": 3.0, "width": 52.0, "height": 3.0, "confidence": 0.98},
+    {"text": "Marktgasse 8, 97070 Würzburg", "x": 5.0, "y": 7.0, "width": 46.0, "height": 2.5, "confidence": 0.97},
+    {"text": "Steuernummer: 256/178/12345", "x": 5.0, "y": 11.0, "width": 42.0, "height": 2.5, "confidence": 0.96},
+    {"text": "Datum: 03.05.2024", "x": 5.0, "y": 15.0, "width": 30.0, "height": 2.5, "confidence": 0.98},
+    {"text": "Roggenbrot 750g", "x": 5.0, "y": 34.0, "width": 40.0, "height": 2.5, "confidence": 0.97},
+    {"text": "2,20", "x": 80.0, "y": 34.0, "width": 15.0, "height": 2.5, "confidence": 0.98},
+    {"text": "Croissant 3er Pack", "x": 5.0, "y": 38.0, "width": 42.0, "height": 2.5, "confidence": 0.97},
+    {"text": "2,90", "x": 80.0, "y": 38.0, "width": 15.0, "height": 2.5, "confidence": 0.98},
+    {"text": "Schwarzwälder Torte Stück", "x": 5.0, "y": 42.0, "width": 46.0, "height": 2.5, "confidence": 0.96},
+    {"text": "3,50", "x": 80.0, "y": 42.0, "width": 15.0, "height": 2.5, "confidence": 0.97},
+    {"text": "enthaltene MwSt 7% 0,59", "x": 5.0, "y": 63.0, "width": 46.0, "height": 2.5, "confidence": 0.94},
+    {"text": "Summe", "x": 5.0, "y": 68.0, "width": 20.0, "height": 3.0, "confidence": 0.98},
+    {"text": "8,60", "x": 80.0, "y": 68.0, "width": 15.0, "height": 3.0, "confidence": 0.98}
+  ],
+  "expected": {
+    "vendor_name": "Bäckerei & Konditorei Schmitt",
+    "date": "2024-05-03",
+    "invoice_number": null,
+    "tax_id": null,
+    "steuernummer": "256/178/12345",
+    "total_amount": 860,
+    "tax_amount": 59,
+    "net_amount": 801,
+    "vat_breakdown": [
+      {"rate": 7, "tax_cents": 59}
+    ]
+  }
+}

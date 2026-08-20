@@ -1,0 +1,30 @@
+{
+  "description": "Kassenbon/receipt with no USt-IdNr, no invoice number, only 19% VAT",
+  "blocks": [
+    {"text": "REWE Markt GmbH", "x": 10.0, "y": 3.0, "width": 60.0, "height": 3.0, "confidence": 0.97},
+    {"text": "Bahnhofstr. 4, 10115 Berlin", "x": 10.0, "y": 7.0, "width": 55.0, "height": 2.5, "confidence": 0.96},
+    {"text": "St.-Nr. 30/235/50916", "x": 10.0, "y": 11.0, "width": 40.0, "height": 2.5, "confidence": 0.95},
+    {"text": "15.04.2024", "x": 10.0, "y": 15.0, "width": 30.0, "height": 2.5, "confidence": 0.97},
+    {"text": "Apfelsaft 1L", "x": 10.0, "y": 38.0, "width": 45.0, "height": 2.5, "confidence": 0.95},
+    {"text": "1,49", "x": 80.0, "y": 38.0, "width": 15.0, "height": 2.5, "confidence": 0.96},
+    {"text": "Brot Vollkorn", "x": 10.0, "y": 42.0, "width": 40.0, "height": 2.5, "confidence": 0.96},
+    {"text": "2,39", "x": 80.0, "y": 42.0, "width": 15.0, "height": 2.5, "confidence": 0.95},
+    {"text": "Butter 250g", "x": 10.0, "y": 46.0, "width": 40.0, "height": 2.5, "confidence": 0.95},
+    {"text": "1,89", "x": 80.0, "y": 46.0, "width": 15.0, "height": 2.5, "confidence": 0.96},
+    {"text": "davon 19% MwSt 0,92", "x": 10.0, "y": 68.0, "width": 45.0, "height": 2.5, "confidence": 0.94},
+    {"text": "Summe", "x": 10.0, "y": 73.0, "width": 20.0, "height": 3.0, "confidence": 0.98},
+    {"text": "5,77", "x": 80.0, "y": 73.0, "width": 15.0, "height": 3.0, "confidence": 0.98}
+  ],
+  "expected": {
+    "vendor_name": "REWE Markt GmbH",
+    "date": "2024-04-15",
+    "invoice_number": null,
+    "tax_id": null,
+    "steuernummer": "30/235/50916",
+    "total_amount": 577,
+    "tax_amount": 92,
+    "net_amount": 485,
+    "vat_rates": [19],
+    "consistency_ok": true
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "description": "Short supermarket kassenbon with Summe keyword and no Rechnungsnummer",
+  "blocks": [
+    {"text": "Lidl Stiftung & Co. KG", "x": 8.0, "y": 3.0, "width": 60.0, "height": 3.0, "confidence": 0.98},
+    {"text": "Filiale 0421, Hannover", "x": 8.0, "y": 7.0, "width": 44.0, "height": 2.5, "confidence": 0.96},
+    {"text": "USt-IdNr.: DE812345123", "x": 8.0, "y": 11.0, "width": 38.0, "height": 2.5, "confidence": 0.95},
+    {"text": "20.07.2024 08:42", "x": 8.0, "y": 15.0, "width": 36.0, "height": 2.5, "confidence": 0.97},
+    {"text": "Milch 3,5% 1L", "x": 8.0, "y": 32.0, "width": 42.0, "height": 2.5, "confidence": 0.96},
+    {"text": "1,05", "x": 80.0, "y": 32.0, "width": 15.0, "height": 2.5, "confidence": 0.97},
+    {"text": "Käse Gouda 200g", "x": 8.0, "y": 36.0, "width": 42.0, "height": 2.5, "confidence": 0.96},
+    {"text": "1,79", "x": 80.0, "y": 36.0, "width": 15.0, "height": 2.5, "confidence": 0.97},
+    {"text": "Wein Rotwein 0,75L", "x": 8.0, "y": 40.0, "width": 44.0, "height": 2.5, "confidence": 0.95},
+    {"text": "3,49", "x": 80.0, "y": 40.0, "width": 15.0, "height": 2.5, "confidence": 0.96},
+    {"text": "MwSt 7% 0,18", "x": 8.0, "y": 60.0, "width": 38.0, "height": 2.5, "confidence": 0.94},
+    {"text": "MwSt 19% 1,07", "x": 8.0, "y": 64.0, "width": 38.0, "height": 2.5, "confidence": 0.94},
+    {"text": "Summe EUR", "x": 8.0, "y": 69.0, "width": 28.0, "height": 3.0, "confidence": 0.98},
+    {"text": "6,33", "x": 80.0, "y": 69.0, "width": 15.0, "height": 3.0, "confidence": 0.98}
+  ],
+  "expected": {
+    "vendor_name": "Lidl Stiftung & Co. KG",
+    "date": "2024-07-20",
+    "invoice_number": null,
+    "tax_id": "DE812345123",
+    "total_amount": 633,
+    "vat_breakdown": [
+      {"rate": 7, "tax_cents": 18},
+      {"rate": 19, "tax_cents": 107}
+    ]
+  }
+}

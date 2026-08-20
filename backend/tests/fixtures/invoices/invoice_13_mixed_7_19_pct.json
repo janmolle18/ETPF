@@ -1,0 +1,32 @@
+{
+  "description": "Mixed 7% and 19% VAT on separate line items (food + non-food)",
+  "blocks": [
+    {"text": "EDEKA Markt Schreiber GmbH", "x": 5.0, "y": 3.0, "width": 50.0, "height": 3.0, "confidence": 0.97},
+    {"text": "Marktplatz 3, 70178 Stuttgart", "x": 5.0, "y": 7.0, "width": 48.0, "height": 2.5, "confidence": 0.96},
+    {"text": "USt-IdNr.: DE223344556", "x": 5.0, "y": 11.0, "width": 38.0, "height": 2.5, "confidence": 0.95},
+    {"text": "Datum: 10.03.2024", "x": 5.0, "y": 15.0, "width": 30.0, "height": 2.5, "confidence": 0.97},
+    {"text": "Biojoghurt 500g *", "x": 5.0, "y": 35.0, "width": 42.0, "height": 2.5, "confidence": 0.96},
+    {"text": "0,99", "x": 80.0, "y": 35.0, "width": 15.0, "height": 2.5, "confidence": 0.97},
+    {"text": "Bananen 1kg *", "x": 5.0, "y": 39.0, "width": 40.0, "height": 2.5, "confidence": 0.96},
+    {"text": "1,79", "x": 80.0, "y": 39.0, "width": 15.0, "height": 2.5, "confidence": 0.97},
+    {"text": "Waschmittel Color", "x": 5.0, "y": 43.0, "width": 42.0, "height": 2.5, "confidence": 0.95},
+    {"text": "4,49", "x": 80.0, "y": 43.0, "width": 15.0, "height": 2.5, "confidence": 0.96},
+    {"text": "Aluminium Folie 30m", "x": 5.0, "y": 47.0, "width": 44.0, "height": 2.5, "confidence": 0.95},
+    {"text": "2,89", "x": 80.0, "y": 47.0, "width": 15.0, "height": 2.5, "confidence": 0.95},
+    {"text": "* = 7% MwSt", "x": 5.0, "y": 62.0, "width": 28.0, "height": 2.0, "confidence": 0.93},
+    {"text": "MwSt 7% 0,19", "x": 5.0, "y": 66.0, "width": 38.0, "height": 2.5, "confidence": 0.94},
+    {"text": "MwSt 19% 1,10", "x": 5.0, "y": 70.0, "width": 38.0, "height": 2.5, "confidence": 0.94},
+    {"text": "Gesamt", "x": 5.0, "y": 75.0, "width": 20.0, "height": 3.0, "confidence": 0.98},
+    {"text": "10,16", "x": 80.0, "y": 75.0, "width": 15.0, "height": 3.0, "confidence": 0.98}
+  ],
+  "expected": {
+    "vendor_name": "EDEKA Markt Schreiber GmbH",
+    "date": "2024-03-10",
+    "tax_id": "DE223344556",
+    "total_amount": 1016,
+    "vat_breakdown": [
+      {"rate": 7, "tax_cents": 19},
+      {"rate": 19, "tax_cents": 110}
+    ]
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "description": "Multi-line project invoice with large amount and multiple line items",
+  "blocks": [
+    {"text": "Digitalagentur Weber & Partner GbR", "x": 5.0, "y": 3.0, "width": 52.0, "height": 3.0, "confidence": 0.97},
+    {"text": "Kreativpark 11, 22765 Hamburg", "x": 5.0, "y": 7.0, "width": 44.0, "height": 2.5, "confidence": 0.96},
+    {"text": "Tel: 040/987654321", "x": 5.0, "y": 11.0, "width": 32.0, "height": 2.5, "confidence": 0.96},
+    {"text": "USt-IdNr.: DE789012345", "x": 5.0, "y": 15.0, "width": 38.0, "height": 2.5, "confidence": 0.95},
+    {"text": "Steuernummer: 17/234/56789", "x": 5.0, "y": 19.0, "width": 40.0, "height": 2.5, "confidence": 0.95},
+    {"text": "Rechnungsnummer: DW-2026-042", "x": 5.0, "y": 23.0, "width": 44.0, "height": 2.5, "confidence": 0.96},
+    {"text": "Rechnungsdatum: 30.06.2026", "x": 5.0, "y": 27.0, "width": 40.0, "height": 2.5, "confidence": 0.97},
+    {"text": "Konzeption & Strategie", "x": 5.0, "y": 42.0, "width": 44.0, "height": 2.5, "confidence": 0.96},
+    {"text": "8h x 120,00", "x": 55.0, "y": 42.0, "width": 28.0, "height": 2.5, "confidence": 0.95},
+    {"text": "960,00", "x": 80.0, "y": 42.0, "width": 15.0, "height": 2.5, "confidence": 0.97},
+    {"text": "UI/UX Design", "x": 5.0, "y": 46.0, "width": 30.0, "height": 2.5, "confidence": 0.97},
+    {"text": "12h x 95,00", "x": 55.0, "y": 46.0, "width": 28.0, "height": 2.5, "confidence": 0.95},
+    {"text": "1.140,00", "x": 80.0, "y": 46.0, "width": 15.0, "height": 2.5, "confidence": 0.97},
+    {"text": "Frontend-Entwicklung", "x": 5.0, "y": 50.0, "width": 40.0, "height": 2.5, "confidence": 0.96},
+    {"text": "20h x 110,00", "x": 55.0, "y": 50.0, "width": 28.0, "height": 2.5, "confidence": 0.95},
+    {"text": "2.200,00", "x": 80.0, "y": 50.0, "width": 15.0, "height": 2.5, "confidence": 0.97},
+    {"text": "Netto", "x": 5.0, "y": 70.0, "width": 20.0, "height": 2.5, "confidence": 0.98},
+    {"text": "4.300,00", "x": 80.0, "y": 70.0, "width": 15.0, "height": 2.5, "confidence": 0.97},
+    {"text": "19% MwSt 817,00", "x": 5.0, "y": 74.0, "width": 38.0, "height": 2.5, "confidence": 0.96},
+    {"text": "Endbetrag", "x": 5.0, "y": 79.0, "width": 28.0, "height": 3.0, "confidence": 0.98},
+    {"text": "5.117,00", "x": 80.0, "y": 79.0, "width": 15.0, "height": 3.0, "confidence": 0.98}
+  ],
+  "expected": {
+    "vendor_name": "Digitalagentur Weber & Partner GbR",
+    "date": "2026-06-30",
+    "invoice_number": "DW-2026-042",
+    "tax_id": "DE789012345",
+    "steuernummer": "17/234/56789",
+    "total_amount": 511700,
+    "tax_amount": 81700,
+    "net_amount": 430000,
+    "vat_breakdown": [
+      {"rate": 19, "tax_cents": 81700}
+    ]
+  }
+}

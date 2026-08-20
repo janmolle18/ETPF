@@ -1,0 +1,35 @@
+{
+  "description": "Service invoice with separate Leistungsdatum and Rechnungsdatum",
+  "blocks": [
+    {"text": "Kanzlei Dr. Hoffmann GbR", "x": 5.0, "y": 3.0, "width": 46.0, "height": 3.0, "confidence": 0.98},
+    {"text": "Kanzleistr. 15, 60313 Frankfurt", "x": 5.0, "y": 7.0, "width": 50.0, "height": 2.5, "confidence": 0.97},
+    {"text": "USt-IdNr.: DE445511228", "x": 5.0, "y": 11.0, "width": 38.0, "height": 2.5, "confidence": 0.97},
+    {"text": "Steuernummer: 45/234/56781", "x": 5.0, "y": 15.0, "width": 42.0, "height": 2.5, "confidence": 0.96},
+    {"text": "Rechnungsnummer: SB-2024-219", "x": 5.0, "y": 19.0, "width": 44.0, "height": 2.5, "confidence": 0.97},
+    {"text": "Rechnungsdatum: 15.10.2024", "x": 5.0, "y": 23.0, "width": 42.0, "height": 2.5, "confidence": 0.97},
+    {"text": "Leistungsdatum: 01.10.2024", "x": 5.0, "y": 27.0, "width": 42.0, "height": 2.5, "confidence": 0.96},
+    {"text": "Jahresabschluss 2023", "x": 5.0, "y": 42.0, "width": 44.0, "height": 2.5, "confidence": 0.97},
+    {"text": "1.500,00", "x": 80.0, "y": 42.0, "width": 15.0, "height": 2.5, "confidence": 0.98},
+    {"text": "Beratung lfd.", "x": 5.0, "y": 46.0, "width": 40.0, "height": 2.5, "confidence": 0.97},
+    {"text": "300,00", "x": 80.0, "y": 46.0, "width": 15.0, "height": 2.5, "confidence": 0.98},
+    {"text": "Nettobetrag", "x": 5.0, "y": 65.0, "width": 26.0, "height": 2.5, "confidence": 0.98},
+    {"text": "1.800,00", "x": 80.0, "y": 65.0, "width": 15.0, "height": 2.5, "confidence": 0.98},
+    {"text": "19% MwSt 342,00", "x": 5.0, "y": 69.0, "width": 38.0, "height": 2.5, "confidence": 0.97},
+    {"text": "Rechnungsbetrag", "x": 5.0, "y": 74.0, "width": 32.0, "height": 3.0, "confidence": 0.98},
+    {"text": "2.142,00", "x": 80.0, "y": 74.0, "width": 15.0, "height": 3.0, "confidence": 0.98}
+  ],
+  "expected": {
+    "vendor_name": "Kanzlei Dr. Hoffmann GbR",
+    "date": "2024-10-15",
+    "service_date": "2024-10-01",
+    "invoice_number": "SB-2024-219",
+    "tax_id": "DE445511228",
+    "steuernummer": "45/234/56781",
+    "total_amount": 214200,
+    "tax_amount": 34200,
+    "net_amount": 180000,
+    "vat_breakdown": [
+      {"rate": 19, "tax_cents": 34200}
+    ]
+  }
+}

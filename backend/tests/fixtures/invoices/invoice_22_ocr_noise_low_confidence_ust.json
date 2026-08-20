@@ -1,0 +1,27 @@
+{
+  "description": "OCR noise on USt-IdNr with spaced digits, bad scan confidence",
+  "blocks": [
+    {"text": "Autohaus Müller GmbH & Co KG", "x": 5.0, "y": 3.0, "width": 52.0, "height": 3.0, "confidence": 0.42},
+    {"text": "Autobahnring 5, 86150 Augsburg", "x": 5.0, "y": 7.0, "width": 50.0, "height": 2.5, "confidence": 0.39},
+    {"text": "USt-Id: DE 7 7 8 8 9 9 0 0 1", "x": 5.0, "y": 11.0, "width": 42.0, "height": 2.5, "confidence": 0.31},
+    {"text": "Rechnungsnr.: AM-2024-1812", "x": 5.0, "y": 15.0, "width": 44.0, "height": 2.5, "confidence": 0.36},
+    {"text": "Datum: 18.12.2024", "x": 5.0, "y": 19.0, "width": 30.0, "height": 2.5, "confidence": 0.44},
+    {"text": "Inspektion + Ölwechsel", "x": 5.0, "y": 40.0, "width": 44.0, "height": 2.5, "confidence": 0.40},
+    {"text": "289,00", "x": 80.0, "y": 40.0, "width": 15.0, "height": 2.5, "confidence": 0.43},
+    {"text": "Bremsbeläge vorne", "x": 5.0, "y": 44.0, "width": 42.0, "height": 2.5, "confidence": 0.38},
+    {"text": "124,95", "x": 80.0, "y": 44.0, "width": 15.0, "height": 2.5, "confidence": 0.41},
+    {"text": "19% MwSt 78,47", "x": 5.0, "y": 67.0, "width": 38.0, "height": 2.5, "confidence": 0.35},
+    {"text": "Total", "x": 5.0, "y": 72.0, "width": 20.0, "height": 3.0, "confidence": 0.40},
+    {"text": "490,62", "x": 80.0, "y": 72.0, "width": 15.0, "height": 3.0, "confidence": 0.42}
+  ],
+  "expected": {
+    "vendor_name": "Autohaus Müller GmbH & Co KG",
+    "date": "2024-12-18",
+    "total_amount": 49062,
+    "tax_amount": 7847,
+    "net_amount": 41215,
+    "vat_breakdown": [
+      {"rate": 19, "tax_cents": 7847}
+    ]
+  }
+}

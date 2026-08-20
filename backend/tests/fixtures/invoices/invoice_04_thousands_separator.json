@@ -1,0 +1,30 @@
+{
+  "description": "Invoice with German thousands separator in amounts",
+  "blocks": [
+    {"text": "IT-Solutions GmbH", "x": 5.0, "y": 3.0, "width": 35.0, "height": 3.0, "confidence": 0.97},
+    {"text": "Technologiepark 8, 01067 Dresden", "x": 5.0, "y": 7.0, "width": 46.0, "height": 2.5, "confidence": 0.96},
+    {"text": "USt-IdNr.: DE345678901", "x": 5.0, "y": 11.0, "width": 38.0, "height": 2.5, "confidence": 0.95},
+    {"text": "Rechnungsnummer: 2026-4711", "x": 5.0, "y": 15.0, "width": 42.0, "height": 2.5, "confidence": 0.96},
+    {"text": "Datum: 20.01.2026", "x": 5.0, "y": 19.0, "width": 32.0, "height": 2.5, "confidence": 0.97},
+    {"text": "Server Dell PowerEdge R750", "x": 5.0, "y": 40.0, "width": 55.0, "height": 2.5, "confidence": 0.95},
+    {"text": "1 x 4.200,00", "x": 60.0, "y": 40.0, "width": 25.0, "height": 2.5, "confidence": 0.94},
+    {"text": "4.200,00", "x": 80.0, "y": 40.0, "width": 15.0, "height": 2.5, "confidence": 0.96},
+    {"text": "Netto", "x": 5.0, "y": 68.0, "width": 20.0, "height": 2.5, "confidence": 0.98},
+    {"text": "3.529,41", "x": 80.0, "y": 68.0, "width": 15.0, "height": 2.5, "confidence": 0.97},
+    {"text": "19% MwSt 670,59", "x": 5.0, "y": 72.0, "width": 40.0, "height": 2.5, "confidence": 0.96},
+    {"text": "Gesamtbetrag", "x": 5.0, "y": 77.0, "width": 30.0, "height": 3.0, "confidence": 0.98},
+    {"text": "4.200,00", "x": 80.0, "y": 77.0, "width": 15.0, "height": 3.0, "confidence": 0.98}
+  ],
+  "expected": {
+    "vendor_name": "IT-Solutions GmbH",
+    "date": "2026-01-20",
+    "invoice_number": "2026-4711",
+    "tax_id": "DE345678901",
+    "total_amount": 420000,
+    "tax_amount": 67059,
+    "net_amount": 352941,
+    "vat_breakdown": [
+      {"rate": 19, "tax_cents": 67059}
+    ]
+  }
+}

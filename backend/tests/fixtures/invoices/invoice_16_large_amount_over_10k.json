@@ -1,0 +1,35 @@
+{
+  "description": "Large invoice total over 10k EUR (12.345,67 EUR = 1234567 cents)",
+  "blocks": [
+    {"text": "BauGrund Projekt GmbH", "x": 5.0, "y": 3.0, "width": 46.0, "height": 3.0, "confidence": 0.97},
+    {"text": "Hauptstr. 100, 80331 München", "x": 5.0, "y": 7.0, "width": 46.0, "height": 2.5, "confidence": 0.97},
+    {"text": "USt-IdNr.: DE334455667", "x": 5.0, "y": 11.0, "width": 38.0, "height": 2.5, "confidence": 0.96},
+    {"text": "Steuernummer: 143/456/78901", "x": 5.0, "y": 15.0, "width": 42.0, "height": 2.5, "confidence": 0.95},
+    {"text": "Rechnungsnummer: BP-2024-301", "x": 5.0, "y": 19.0, "width": 44.0, "height": 2.5, "confidence": 0.96},
+    {"text": "Datum: 30.11.2024", "x": 5.0, "y": 23.0, "width": 30.0, "height": 2.5, "confidence": 0.97},
+    {"text": "Rohbauarbeiten Haus", "x": 5.0, "y": 40.0, "width": 44.0, "height": 2.5, "confidence": 0.96},
+    {"text": "5.800,00", "x": 80.0, "y": 40.0, "width": 15.0, "height": 2.5, "confidence": 0.97},
+    {"text": "Dachabdichtung komplett", "x": 5.0, "y": 44.0, "width": 46.0, "height": 2.5, "confidence": 0.96},
+    {"text": "3.565,77", "x": 80.0, "y": 44.0, "width": 15.0, "height": 2.5, "confidence": 0.97},
+    {"text": "Materiallieferung", "x": 5.0, "y": 48.0, "width": 40.0, "height": 2.5, "confidence": 0.96},
+    {"text": "2.980,90", "x": 80.0, "y": 48.0, "width": 15.0, "height": 2.5, "confidence": 0.97},
+    {"text": "Netto", "x": 5.0, "y": 68.0, "width": 20.0, "height": 2.5, "confidence": 0.98},
+    {"text": "10.382,57", "x": 80.0, "y": 68.0, "width": 15.0, "height": 2.5, "confidence": 0.97},
+    {"text": "19% MwSt 1.972,69", "x": 5.0, "y": 72.0, "width": 42.0, "height": 2.5, "confidence": 0.96},
+    {"text": "Endbetrag", "x": 5.0, "y": 77.0, "width": 26.0, "height": 3.0, "confidence": 0.98},
+    {"text": "12.355,26", "x": 80.0, "y": 77.0, "width": 15.0, "height": 3.0, "confidence": 0.98}
+  ],
+  "expected": {
+    "vendor_name": "BauGrund Projekt GmbH",
+    "date": "2024-11-30",
+    "invoice_number": "BP-2024-301",
+    "tax_id": "DE334455667",
+    "steuernummer": "143/456/78901",
+    "total_amount": 1235526,
+    "tax_amount": 197269,
+    "net_amount": 1038257,
+    "vat_breakdown": [
+      {"rate": 19, "tax_cents": 197269}
+    ]
+  }
+}

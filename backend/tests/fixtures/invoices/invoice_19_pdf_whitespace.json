@@ -1,0 +1,34 @@
+{
+  "description": "PDF-style invoice with extra whitespace and spread-out blocks",
+  "blocks": [
+    {"text": "Softwarehaus Norddeutschland AG", "x": 5.0, "y": 2.0, "width": 54.0, "height": 2.5, "confidence": 0.99},
+    {"text": "Spaldingstraße 210, 20097 Hamburg", "x": 5.0, "y": 5.0, "width": 52.0, "height": 2.0, "confidence": 0.99},
+    {"text": "USt-IdNr.: DE556677889", "x": 5.0, "y": 8.0, "width": 36.0, "height": 2.0, "confidence": 0.99},
+    {"text": "Steuernummer: 21/456/78901", "x": 5.0, "y": 11.0, "width": 38.0, "height": 2.0, "confidence": 0.99},
+    {"text": "Rechnungsnummer: SNA-2024-551", "x": 5.0, "y": 14.5, "width": 50.0, "height": 2.0, "confidence": 0.99},
+    {"text": "Rechnungsdatum: 20.12.2024", "x": 5.0, "y": 18.0, "width": 44.0, "height": 2.0, "confidence": 0.99},
+    {"text": "Cloud Hosting Paket M", "x": 5.0, "y": 36.0, "width": 44.0, "height": 2.0, "confidence": 0.99},
+    {"text": "12 Monate", "x": 53.0, "y": 36.0, "width": 16.0, "height": 2.0, "confidence": 0.99},
+    {"text": "1.188,00", "x": 80.0, "y": 36.0, "width": 15.0, "height": 2.0, "confidence": 0.99},
+    {"text": "Support SLA Bronze", "x": 5.0, "y": 39.0, "width": 40.0, "height": 2.0, "confidence": 0.99},
+    {"text": "12 Monate", "x": 53.0, "y": 39.0, "width": 16.0, "height": 2.0, "confidence": 0.99},
+    {"text": "600,00", "x": 80.0, "y": 39.0, "width": 15.0, "height": 2.0, "confidence": 0.99},
+    {"text": "Nettobetrag", "x": 5.0, "y": 65.0, "width": 26.0, "height": 2.0, "confidence": 0.99},
+    {"text": "1.788,00", "x": 80.0, "y": 65.0, "width": 15.0, "height": 2.0, "confidence": 0.99},
+    {"text": "19% MwSt 339,72", "x": 5.0, "y": 68.0, "width": 40.0, "height": 2.0, "confidence": 0.99},
+    {"text": "Gesamtbetrag", "x": 5.0, "y": 72.0, "width": 26.0, "height": 2.5, "confidence": 0.99},
+    {"text": "2.127,72", "x": 80.0, "y": 72.0, "width": 15.0, "height": 2.5, "confidence": 0.99}
+  ],
+  "expected": {
+    "vendor_name": "Softwarehaus Norddeutschland AG",
+    "date": "2024-12-20",
+    "invoice_number": "SNA-2024-551",
+    "tax_id": "DE556677889",
+    "total_amount": 212772,
+    "tax_amount": 33972,
+    "net_amount": 178800,
+    "vat_breakdown": [
+      {"rate": 19, "tax_cents": 33972}
+    ]
+  }
+}

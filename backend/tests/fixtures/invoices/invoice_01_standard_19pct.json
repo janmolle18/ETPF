@@ -1,0 +1,33 @@
+{
+  "description": "Standard German invoice with 19% VAT, known total",
+  "blocks": [
+    {"text": "METRO CASH AND CARRY GmbH", "x": 5.0, "y": 3.0, "width": 40.0, "height": 3.0, "confidence": 0.98},
+    {"text": "Großmarktstraße 12, 20537 Hamburg", "x": 5.0, "y": 7.0, "width": 45.0, "height": 2.5, "confidence": 0.97},
+    {"text": "Tel: +49 40 12345678", "x": 5.0, "y": 10.5, "width": 30.0, "height": 2.5, "confidence": 0.96},
+    {"text": "USt-IdNr.: DE123456789", "x": 5.0, "y": 14.0, "width": 35.0, "height": 2.5, "confidence": 0.95},
+    {"text": "Steuernummer: 22/345/67890", "x": 5.0, "y": 17.5, "width": 38.0, "height": 2.5, "confidence": 0.95},
+    {"text": "Rechnungsnummer: RE-2026-00123", "x": 5.0, "y": 21.0, "width": 45.0, "height": 2.5, "confidence": 0.96},
+    {"text": "Rechnungsdatum: 15.07.2026", "x": 5.0, "y": 24.5, "width": 40.0, "height": 2.5, "confidence": 0.97},
+    {"text": "Premium USB-C Hub", "x": 5.0, "y": 42.0, "width": 50.0, "height": 2.5, "confidence": 0.95},
+    {"text": "1 x 50,42", "x": 65.0, "y": 42.0, "width": 20.0, "height": 2.5, "confidence": 0.94},
+    {"text": "50,42", "x": 80.0, "y": 42.0, "width": 15.0, "height": 2.5, "confidence": 0.96},
+    {"text": "Netto", "x": 5.0, "y": 70.0, "width": 20.0, "height": 2.5, "confidence": 0.98},
+    {"text": "42,37", "x": 80.0, "y": 70.0, "width": 15.0, "height": 2.5, "confidence": 0.97},
+    {"text": "MwSt 19% 8,05", "x": 5.0, "y": 74.0, "width": 40.0, "height": 2.5, "confidence": 0.96},
+    {"text": "Gesamtbetrag", "x": 5.0, "y": 78.0, "width": 30.0, "height": 3.0, "confidence": 0.98},
+    {"text": "50,42", "x": 80.0, "y": 78.0, "width": 15.0, "height": 3.0, "confidence": 0.98}
+  ],
+  "expected": {
+    "vendor_name": "METRO CASH AND CARRY GmbH",
+    "date": "2026-07-15",
+    "invoice_number": "RE-2026-00123",
+    "tax_id": "DE123456789",
+    "steuernummer": "22/345/67890",
+    "total_amount": 5042,
+    "tax_amount": 805,
+    "net_amount": 4237,
+    "vat_breakdown": [
+      {"rate": 19, "tax_cents": 805}
+    ]
+  }
+}

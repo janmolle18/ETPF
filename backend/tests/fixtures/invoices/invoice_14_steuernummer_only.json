@@ -1,0 +1,34 @@
+{
+  "description": "Invoice with Steuernummer only, no USt-IdNr (small business / Kleinunternehmer)",
+  "blocks": [
+    {"text": "Jan Müller Freelance Design", "x": 5.0, "y": 3.0, "width": 50.0, "height": 3.0, "confidence": 0.97},
+    {"text": "Gartenweg 8, 01067 Dresden", "x": 5.0, "y": 7.0, "width": 44.0, "height": 2.5, "confidence": 0.96},
+    {"text": "St.-Nr. 202/123/45678", "x": 5.0, "y": 11.0, "width": 38.0, "height": 2.5, "confidence": 0.95},
+    {"text": "Rechnungsnummer: JM-2024-007", "x": 5.0, "y": 15.0, "width": 46.0, "height": 2.5, "confidence": 0.96},
+    {"text": "Datum: 28.02.2024", "x": 5.0, "y": 19.0, "width": 32.0, "height": 2.5, "confidence": 0.97},
+    {"text": "Logo Design Konzept", "x": 5.0, "y": 40.0, "width": 46.0, "height": 2.5, "confidence": 0.96},
+    {"text": "4h x 65,00", "x": 55.0, "y": 40.0, "width": 25.0, "height": 2.5, "confidence": 0.95},
+    {"text": "260,00", "x": 80.0, "y": 40.0, "width": 15.0, "height": 2.5, "confidence": 0.97},
+    {"text": "Visitenkarten Layout", "x": 5.0, "y": 44.0, "width": 44.0, "height": 2.5, "confidence": 0.95},
+    {"text": "2h x 65,00", "x": 55.0, "y": 44.0, "width": 25.0, "height": 2.5, "confidence": 0.95},
+    {"text": "130,00", "x": 80.0, "y": 44.0, "width": 15.0, "height": 2.5, "confidence": 0.97},
+    {"text": "Netto", "x": 5.0, "y": 65.0, "width": 20.0, "height": 2.5, "confidence": 0.98},
+    {"text": "390,00", "x": 80.0, "y": 65.0, "width": 15.0, "height": 2.5, "confidence": 0.98},
+    {"text": "MwSt 19% 74,10", "x": 5.0, "y": 69.0, "width": 38.0, "height": 2.5, "confidence": 0.96},
+    {"text": "Rechnungsbetrag", "x": 5.0, "y": 74.0, "width": 34.0, "height": 3.0, "confidence": 0.98},
+    {"text": "464,10", "x": 80.0, "y": 74.0, "width": 15.0, "height": 3.0, "confidence": 0.98}
+  ],
+  "expected": {
+    "vendor_name": "Jan Müller Freelance Design",
+    "date": "2024-02-28",
+    "invoice_number": "JM-2024-007",
+    "tax_id": null,
+    "steuernummer": "202/123/45678",
+    "total_amount": 46410,
+    "tax_amount": 7410,
+    "net_amount": 39000,
+    "vat_breakdown": [
+      {"rate": 19, "tax_cents": 7410}
+    ]
+  }
+}

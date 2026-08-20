@@ -1,0 +1,25 @@
+{
+  "description": "Low-confidence OCR with misspelled keywords (bad scan)",
+  "blocks": [
+    {"text": "BUROMAX Handels GmbH", "x": 5.0, "y": 3.0, "width": 48.0, "height": 3.0, "confidence": 0.41},
+    {"text": "Industriestr. 77, 50679 Koln", "x": 5.0, "y": 7.0, "width": 48.0, "height": 2.5, "confidence": 0.38},
+    {"text": "USt-ldNr.: DE445566778", "x": 5.0, "y": 11.0, "width": 38.0, "height": 2.5, "confidence": 0.35},
+    {"text": "Rechnunqsnummer: RX-2024-0099", "x": 5.0, "y": 15.0, "width": 46.0, "height": 2.5, "confidence": 0.32},
+    {"text": "Datum: 22.09.2024", "x": 5.0, "y": 19.0, "width": 32.0, "height": 2.5, "confidence": 0.45},
+    {"text": "Druckerpapier A4 x3", "x": 5.0, "y": 40.0, "width": 44.0, "height": 2.5, "confidence": 0.42},
+    {"text": "14,97", "x": 80.0, "y": 40.0, "width": 15.0, "height": 2.5, "confidence": 0.40},
+    {"text": "Kugelschreiber 10er", "x": 5.0, "y": 44.0, "width": 42.0, "height": 2.5, "confidence": 0.38},
+    {"text": "4,99", "x": 80.0, "y": 44.0, "width": 15.0, "height": 2.5, "confidence": 0.39},
+    {"text": "MwSt 19% 3,80", "x": 5.0, "y": 68.0, "width": 38.0, "height": 2.5, "confidence": 0.36},
+    {"text": "Ge5amtbetrag", "x": 5.0, "y": 73.0, "width": 30.0, "height": 3.0, "confidence": 0.33},
+    {"text": "19,96", "x": 80.0, "y": 73.0, "width": 15.0, "height": 3.0, "confidence": 0.44}
+  ],
+  "expected": {
+    "vendor_name": "BUROMAX Handels GmbH",
+    "date": "2024-09-22",
+    "total_amount": 1996,
+    "tax_amount": 380,
+    "net_amount": 1616,
+    "vat_rates": [19]
+  }
+}

@@ -1,0 +1,39 @@
+# Environment variables (never commit secrets)
+.env
+.env.*
+**/.env
+
+# Python virtual environment
+backend/.venv/
+.venv/
+venv/
+env/
+ENV/
+
+# Python cache files
+**/__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+
+# Local SQLite databases
+backend/etpf.db
+etpf.db
+
+# Storage of processed uploads (don't upload private receipts to Git)
+backend/storage/
+
+# Node packages and frontend build
+frontend/node_modules/
+frontend/dist/
+
+# IDE and OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Scratch and test files
+test_receipt.png
+scratch/

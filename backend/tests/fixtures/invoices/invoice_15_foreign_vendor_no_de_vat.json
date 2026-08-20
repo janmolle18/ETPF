@@ -1,0 +1,27 @@
+{
+  "description": "Foreign vendor with no DE USt-IdNr, amounts in EUR (e.g. Austrian supplier)",
+  "blocks": [
+    {"text": "Vienna Tech Solutions GmbH", "x": 5.0, "y": 3.0, "width": 50.0, "height": 3.0, "confidence": 0.97},
+    {"text": "Ringstraße 22, 1010 Wien, Österreich", "x": 5.0, "y": 7.0, "width": 55.0, "height": 2.5, "confidence": 0.96},
+    {"text": "UID-Nr.: ATU65432187", "x": 5.0, "y": 11.0, "width": 38.0, "height": 2.5, "confidence": 0.95},
+    {"text": "Rechnungsnummer: VTS-2024-188", "x": 5.0, "y": 15.0, "width": 46.0, "height": 2.5, "confidence": 0.96},
+    {"text": "Datum: 05.04.2024", "x": 5.0, "y": 19.0, "width": 30.0, "height": 2.5, "confidence": 0.97},
+    {"text": "Software Lizenz Jahresabo", "x": 5.0, "y": 40.0, "width": 48.0, "height": 2.5, "confidence": 0.96},
+    {"text": "840,00", "x": 80.0, "y": 40.0, "width": 15.0, "height": 2.5, "confidence": 0.97},
+    {"text": "Support & Wartung", "x": 5.0, "y": 44.0, "width": 42.0, "height": 2.5, "confidence": 0.96},
+    {"text": "360,00", "x": 80.0, "y": 44.0, "width": 15.0, "height": 2.5, "confidence": 0.97},
+    {"text": "Nettobetrag", "x": 5.0, "y": 65.0, "width": 28.0, "height": 2.5, "confidence": 0.97},
+    {"text": "1.200,00", "x": 80.0, "y": 65.0, "width": 15.0, "height": 2.5, "confidence": 0.97},
+    {"text": "MwSt 20% 240,00", "x": 5.0, "y": 69.0, "width": 38.0, "height": 2.5, "confidence": 0.96},
+    {"text": "Gesamt", "x": 5.0, "y": 74.0, "width": 20.0, "height": 3.0, "confidence": 0.98},
+    {"text": "1.440,00", "x": 80.0, "y": 74.0, "width": 15.0, "height": 3.0, "confidence": 0.98}
+  ],
+  "expected": {
+    "vendor_name": "Vienna Tech Solutions GmbH",
+    "date": "2024-04-05",
+    "invoice_number": "VTS-2024-188",
+    "tax_id": null,
+    "total_amount": 144000,
+    "currency": "EUR"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "description": "Receipt with ISO date format (2024-03-15), no invoice number",
+  "blocks": [
+    {"text": "Kraft-Benzin GmbH", "x": 5.0, "y": 3.0, "width": 44.0, "height": 3.0, "confidence": 0.97},
+    {"text": "Autobahn A9 Ausfahrt 4", "x": 5.0, "y": 7.0, "width": 44.0, "height": 2.5, "confidence": 0.96},
+    {"text": "USt-IdNr.: DE998877665", "x": 5.0, "y": 11.0, "width": 38.0, "height": 2.5, "confidence": 0.96},
+    {"text": "Datum: 2024-03-15", "x": 5.0, "y": 15.0, "width": 32.0, "height": 2.5, "confidence": 0.97},
+    {"text": "Super E10 45L", "x": 5.0, "y": 38.0, "width": 40.0, "height": 2.5, "confidence": 0.95},
+    {"text": "76,50", "x": 80.0, "y": 38.0, "width": 15.0, "height": 2.5, "confidence": 0.96},
+    {"text": "Kaffeespezialität", "x": 5.0, "y": 42.0, "width": 40.0, "height": 2.5, "confidence": 0.95},
+    {"text": "2,99", "x": 80.0, "y": 42.0, "width": 15.0, "height": 2.5, "confidence": 0.96},
+    {"text": "enthaltene MwSt 19% 13,37", "x": 5.0, "y": 65.0, "width": 48.0, "height": 2.5, "confidence": 0.94},
+    {"text": "Summe", "x": 5.0, "y": 70.0, "width": 20.0, "height": 3.0, "confidence": 0.98},
+    {"text": "79,49", "x": 80.0, "y": 70.0, "width": 15.0, "height": 3.0, "confidence": 0.98}
+  ],
+  "expected": {
+    "vendor_name": "Kraft-Benzin GmbH",
+    "date": "2024-03-15",
+    "invoice_number": null,
+    "tax_id": "DE998877665",
+    "total_amount": 7949,
+    "tax_amount": 1337,
+    "net_amount": 6612,
+    "vat_breakdown": [
+      {"rate": 19, "tax_cents": 1337}
+    ]
+  }
+}

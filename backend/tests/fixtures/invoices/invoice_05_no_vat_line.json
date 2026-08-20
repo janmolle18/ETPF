@@ -1,0 +1,21 @@
+{
+  "description": "Simple receipt without explicit VAT line – falls back to 19% calculation",
+  "blocks": [
+    {"text": "Café am See", "x": 5.0, "y": 3.0, "width": 30.0, "height": 3.0, "confidence": 0.97},
+    {"text": "Seepromenade 7, 78464 Konstanz", "x": 5.0, "y": 7.0, "width": 44.0, "height": 2.5, "confidence": 0.96},
+    {"text": "15.07.2026", "x": 5.0, "y": 15.0, "width": 25.0, "height": 2.5, "confidence": 0.97},
+    {"text": "Cappuccino", "x": 5.0, "y": 38.0, "width": 30.0, "height": 2.5, "confidence": 0.96},
+    {"text": "3,50", "x": 80.0, "y": 38.0, "width": 15.0, "height": 2.5, "confidence": 0.97},
+    {"text": "Kuchen", "x": 5.0, "y": 42.0, "width": 25.0, "height": 2.5, "confidence": 0.96},
+    {"text": "4,20", "x": 80.0, "y": 42.0, "width": 15.0, "height": 2.5, "confidence": 0.97},
+    {"text": "Total", "x": 5.0, "y": 70.0, "width": 20.0, "height": 3.0, "confidence": 0.98},
+    {"text": "7,70", "x": 80.0, "y": 70.0, "width": 15.0, "height": 3.0, "confidence": 0.98}
+  ],
+  "expected": {
+    "vendor_name": "Café am See",
+    "date": "2026-07-15",
+    "total_amount": 770,
+    "tax_amount_source": "calculated_19pct",
+    "vat_breakdown": []
+  }
+}

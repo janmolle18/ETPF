@@ -1,0 +1,24 @@
+{
+  "description": "OCR noise in USt-IdNr (spaces between digits, common OCR artifact)",
+  "blocks": [
+    {"text": "Buchhandlung Schiller KG", "x": 5.0, "y": 3.0, "width": 42.0, "height": 3.0, "confidence": 0.97},
+    {"text": "Goethestraße 18, 60313 Frankfurt", "x": 5.0, "y": 7.0, "width": 46.0, "height": 2.5, "confidence": 0.96},
+    {"text": "USt-IdNr.: DE 2 3 4 5 6 7 8 9 0", "x": 5.0, "y": 11.0, "width": 44.0, "height": 2.5, "confidence": 0.82},
+    {"text": "Datum: 30.04.2026", "x": 5.0, "y": 15.0, "width": 32.0, "height": 2.5, "confidence": 0.97},
+    {"text": "Python Programmierung (7% USt)", "x": 5.0, "y": 38.0, "width": 55.0, "height": 2.5, "confidence": 0.95},
+    {"text": "29,99", "x": 80.0, "y": 38.0, "width": 15.0, "height": 2.5, "confidence": 0.97},
+    {"text": "7% USt 1,96", "x": 5.0, "y": 68.0, "width": 30.0, "height": 2.5, "confidence": 0.95},
+    {"text": "Summe", "x": 5.0, "y": 73.0, "width": 20.0, "height": 3.0, "confidence": 0.98},
+    {"text": "29,99", "x": 80.0, "y": 73.0, "width": 15.0, "height": 3.0, "confidence": 0.98}
+  ],
+  "expected": {
+    "vendor_name": "Buchhandlung Schiller KG",
+    "date": "2026-04-30",
+    "tax_id": "DE234567890",
+    "total_amount": 2999,
+    "tax_amount": 196,
+    "vat_breakdown": [
+      {"rate": 7, "tax_cents": 196}
+    ]
+  }
+}

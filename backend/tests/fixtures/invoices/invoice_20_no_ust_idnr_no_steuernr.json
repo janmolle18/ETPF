@@ -1,0 +1,24 @@
+{
+  "description": "Invoice with no tax number at all (non-taxable entity / club / Verein)",
+  "blocks": [
+    {"text": "Sportverein 1899 Grünthal e.V.", "x": 5.0, "y": 3.0, "width": 52.0, "height": 3.0, "confidence": 0.97},
+    {"text": "Vereinsstr. 12, 04229 Leipzig", "x": 5.0, "y": 7.0, "width": 46.0, "height": 2.5, "confidence": 0.96},
+    {"text": "Rechnungsnummer: SV-2024-044", "x": 5.0, "y": 12.0, "width": 46.0, "height": 2.5, "confidence": 0.96},
+    {"text": "Datum: 15.06.2024", "x": 5.0, "y": 16.0, "width": 30.0, "height": 2.5, "confidence": 0.97},
+    {"text": "Hallenmietgebühr", "x": 5.0, "y": 38.0, "width": 42.0, "height": 2.5, "confidence": 0.96},
+    {"text": "120,00", "x": 80.0, "y": 38.0, "width": 15.0, "height": 2.5, "confidence": 0.97},
+    {"text": "Equipmentverleih", "x": 5.0, "y": 42.0, "width": 40.0, "height": 2.5, "confidence": 0.95},
+    {"text": "30,00", "x": 80.0, "y": 42.0, "width": 15.0, "height": 2.5, "confidence": 0.97},
+    {"text": "Gesamtbetrag", "x": 5.0, "y": 65.0, "width": 30.0, "height": 3.0, "confidence": 0.98},
+    {"text": "150,00", "x": 80.0, "y": 65.0, "width": 15.0, "height": 3.0, "confidence": 0.98}
+  ],
+  "expected": {
+    "vendor_name": "Sportverein 1899 Grünthal e.V.",
+    "date": "2024-06-15",
+    "invoice_number": "SV-2024-044",
+    "tax_id": null,
+    "steuernummer": null,
+    "total_amount": 15000,
+    "currency": "EUR"
+  }
+}

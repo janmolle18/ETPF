@@ -1,0 +1,31 @@
+{
+  "description": "Invoice with separate Rechnungsdatum and Leistungsdatum",
+  "blocks": [
+    {"text": "Handwerk & Service GmbH", "x": 5.0, "y": 3.0, "width": 40.0, "height": 3.0, "confidence": 0.97},
+    {"text": "Handwerkerstraße 42, 10115 Berlin", "x": 5.0, "y": 7.0, "width": 46.0, "height": 2.5, "confidence": 0.96},
+    {"text": "USt-IdNr.: DE567890123", "x": 5.0, "y": 11.0, "width": 38.0, "height": 2.5, "confidence": 0.95},
+    {"text": "Steuernummer: 13/445/78901", "x": 5.0, "y": 15.0, "width": 40.0, "height": 2.5, "confidence": 0.95},
+    {"text": "Rechnungsnummer: HW-2026-0099", "x": 5.0, "y": 19.0, "width": 45.0, "height": 2.5, "confidence": 0.96},
+    {"text": "Rechnungsdatum: 21.07.2026", "x": 5.0, "y": 23.0, "width": 42.0, "height": 2.5, "confidence": 0.97},
+    {"text": "Leistungsdatum: 18.07.2026", "x": 5.0, "y": 27.0, "width": 42.0, "height": 2.5, "confidence": 0.97},
+    {"text": "Montagearbeiten Küche", "x": 5.0, "y": 45.0, "width": 45.0, "height": 2.5, "confidence": 0.95},
+    {"text": "3h x 85,00", "x": 55.0, "y": 45.0, "width": 30.0, "height": 2.5, "confidence": 0.94},
+    {"text": "255,00", "x": 80.0, "y": 45.0, "width": 15.0, "height": 2.5, "confidence": 0.96},
+    {"text": "MwSt 19% 48,45", "x": 5.0, "y": 72.0, "width": 38.0, "height": 2.5, "confidence": 0.96},
+    {"text": "Endbetrag", "x": 5.0, "y": 77.0, "width": 28.0, "height": 3.0, "confidence": 0.98},
+    {"text": "303,45", "x": 80.0, "y": 77.0, "width": 15.0, "height": 3.0, "confidence": 0.98}
+  ],
+  "expected": {
+    "vendor_name": "Handwerk & Service GmbH",
+    "date": "2026-07-21",
+    "service_date": "2026-07-18",
+    "invoice_number": "HW-2026-0099",
+    "tax_id": "DE567890123",
+    "steuernummer": "13/445/78901",
+    "total_amount": 30345,
+    "tax_amount": 4845,
+    "vat_breakdown": [
+      {"rate": 19, "tax_cents": 4845}
+    ]
+  }
+}

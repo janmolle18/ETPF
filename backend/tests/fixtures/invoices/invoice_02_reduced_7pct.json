@@ -1,0 +1,29 @@
+{
+  "description": "German supermarket invoice with 7% VAT (Lebensmittel)",
+  "blocks": [
+    {"text": "EDEKA Supermarkt GmbH", "x": 5.0, "y": 3.0, "width": 40.0, "height": 3.0, "confidence": 0.97},
+    {"text": "Marktplatz 5, 80331 München", "x": 5.0, "y": 7.0, "width": 42.0, "height": 2.5, "confidence": 0.96},
+    {"text": "USt-IdNr.: DE987654321", "x": 5.0, "y": 11.0, "width": 35.0, "height": 2.5, "confidence": 0.95},
+    {"text": "Rechnungsdatum: 10.03.2026", "x": 5.0, "y": 15.0, "width": 40.0, "height": 2.5, "confidence": 0.97},
+    {"text": "Vollmilch 3,5% 1l", "x": 5.0, "y": 40.0, "width": 45.0, "height": 2.5, "confidence": 0.96},
+    {"text": "1,29", "x": 80.0, "y": 40.0, "width": 15.0, "height": 2.5, "confidence": 0.97},
+    {"text": "Brot (Roggenmisch)", "x": 5.0, "y": 44.0, "width": 45.0, "height": 2.5, "confidence": 0.95},
+    {"text": "2,49", "x": 80.0, "y": 44.0, "width": 15.0, "height": 2.5, "confidence": 0.96},
+    {"text": "Netto", "x": 5.0, "y": 68.0, "width": 20.0, "height": 2.5, "confidence": 0.98},
+    {"text": "3,53", "x": 80.0, "y": 68.0, "width": 15.0, "height": 2.5, "confidence": 0.97},
+    {"text": "MwSt 7% 0,25", "x": 5.0, "y": 72.0, "width": 35.0, "height": 2.5, "confidence": 0.96},
+    {"text": "Summe", "x": 5.0, "y": 76.0, "width": 20.0, "height": 3.0, "confidence": 0.98},
+    {"text": "3,78", "x": 80.0, "y": 76.0, "width": 15.0, "height": 3.0, "confidence": 0.98}
+  ],
+  "expected": {
+    "vendor_name": "EDEKA Supermarkt GmbH",
+    "date": "2026-03-10",
+    "tax_id": "DE987654321",
+    "total_amount": 378,
+    "tax_amount": 25,
+    "net_amount": 353,
+    "vat_breakdown": [
+      {"rate": 7, "tax_cents": 25}
+    ]
+  }
+}
