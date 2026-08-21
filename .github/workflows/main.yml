@@ -37,6 +37,11 @@ jobs:
           cd backend
           python test_ocr.py
 
+      - name: Run Backend Unit & API Tests
+        run: |
+          cd backend
+          pytest tests/
+
   frontend-build:
     name: Frontend CI (Node Build)
     runs-on: ubuntu-latest

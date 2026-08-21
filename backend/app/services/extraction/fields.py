@@ -15,9 +15,6 @@ from typing import Any
 # Helpers: amount parsing
 # ---------------------------------------------------------------------------
 
-_USED_SPANS: list[tuple[int, int]] = []
-
-
 def _overlaps(start: int, end: int, used: list[tuple[int, int]]) -> bool:
     return any(s < end and start < e for s, e in used)
 
@@ -72,7 +69,9 @@ _RE_DATE_ISO = re.compile(r'\b(\d{4})-(\d{2})-(\d{2})\b')
 _RE_DATE_US = re.compile(r'\b(\d{1,2})/(\d{1,2})/(\d{4})\b')
 
 # USt-IdNr: DE + 9 digits, OCR-tolerant spaces
-_RE_UST_IDNR = re.compile(r'\bDE\s?(\d[\s]?\d[\s]?\d[\s]?\d[\s]?\d[\s]?\d[\s]?\d[\s]?\d[\s]?\d)\b', re.IGNORECASE)
+_RE_UST_IDNR = re.compile(
+    r'\bDE\s?(\d[\s]?\d[\s]?\d[\s]?\d[\s]?\d[\s]?\d[\s]?\d[\s]?\d[\s]?\d)\b', re.IGNORECASE
+)
 
 # Steuernummer: 2-3 / 3-4 / 4-5 digits (German Finanzamt format, state-dependent)
 _RE_STEUERNR = re.compile(r'\b(\d{2,3})[/\-](\d{3,4})[/\-](\d{4,5})\b')
@@ -94,14 +93,21 @@ _RE_VAT_RATE_KW_AMT = re.compile(
 )
 
 # Net total keywords
-_TOTAL_WORD_REGEX = re.compile(r'\b(?:total|summe|gesamt|endbetrag|brutto|gesamtbetrag|rechnungsbetrag)\b', re.IGNORECASE)
-_EXCLUDE_TOTAL_REGEX = re.compile(r'\b(?:subtotal|zwischensumme|netto|tax|mwst|ust|vat)\b', re.IGNORECASE)
+_TOTAL_WORD_REGEX = re.compile(
+    r'\b(?:total|summe|gesamt|endbetrag|brutto|gesamtbetrag|rechnungsbetrag)\b', re.IGNORECASE
+)
+_EXCLUDE_TOTAL_REGEX = re.compile(
+    r'\b(?:subtotal|zwischensumme|netto|tax|mwst|ust|vat)\b', re.IGNORECASE
+)
 
 _EXPLICIT_TAX_REGEX = re.compile(r'\b(?:tax|mwst|ust|vat)\b', re.IGNORECASE)
 _EXCLUDE_TAX_REGEX = re.compile(r'\b(?:subtotal|zwischensumme|total|summe|gesamt)\b', re.IGNORECASE)
 
 _ADDRESS_KEYWORDS = re.compile(
-    r'(?:avenue|ave|street|st\.|blvd|road|rd\.|drive|dr\.|way|lane|suite|ste\.|new york|ny \d{5}|\b\d{5}\b)',
+    # NOTE: no 'dr\.' token here — it would false-positive on the German title
+    # 'Dr.' in vendor names (e.g. 'Kanzlei Dr. Hoffmann'); 'drive' still matches.
+    r'(?:avenue|ave|street|st\.|blvd|road|rd\.|drive|way|lane|suite|ste\.'
+    r'|new york|ny \d{5}|\b\d{5}\b)',
     re.IGNORECASE,
 )
 
@@ -142,7 +148,9 @@ def extract_fields(blocks: list[dict[str, Any]]) -> dict[str, Any]:
 
     vat_breakdown = _extract_vat_breakdown(sorted_blocks)
     total_cents, total_source = _extract_total(sorted_blocks)
-    tax_cents, tax_source, net_cents = _derive_tax_and_net(total_cents, vat_breakdown, sorted_blocks)
+    tax_cents, tax_source, net_cents = _derive_tax_and_net(
+        total_cents, vat_breakdown, sorted_blocks
+    )
 
     consistency_ok: bool | None = None
     if total_cents > 0 and tax_cents > 0:
@@ -189,7 +197,10 @@ def _extract_vendor(blocks: list[dict]) -> str:
             continue
         if _RE_DATE_DE.search(text) or _RE_DATE_US.search(text) or _RE_DATE_ISO.search(text):
             continue
-        if re.search(r'(?:tel|phone|fax|email|www|http|\.com|\.de|str\.|ust|mwst|steuer)', text, re.IGNORECASE):
+        if re.search(
+            r'(?:tel|phone|fax|email|www|http|\.com|\.de|str\.|ust|mwst|steuer)',
+            text, re.IGNORECASE
+        ):
             continue
         if _ADDRESS_KEYWORDS.search(text):
             continue
@@ -322,7 +333,10 @@ def _extract_total(blocks: list[dict]) -> tuple[int, str]:
                 return max(amounts), "extracted_keyword"
 
     # 2a. Keyword block + amount on SAME line (y-distance < 3%) – highest priority
-    kw_blocks = [b for b in blocks if _TOTAL_WORD_REGEX.search(b["text"]) and not _EXCLUDE_TOTAL_REGEX.search(b["text"])]
+    kw_blocks = [
+        b for b in blocks
+        if _TOTAL_WORD_REGEX.search(b["text"]) and not _EXCLUDE_TOTAL_REGEX.search(b["text"])
+    ]
     for kw_b in kw_blocks:
         kw_y = kw_b.get("y", 0)
         same_line_amounts: list[int] = []
@@ -340,7 +354,8 @@ def _extract_total(blocks: list[dict]) -> tuple[int, str]:
         nearby_amounts: list[int] = []
         for block in blocks:
             if abs(block.get("y", 0) - kw_y) < 8.0 and block is not kw_b:
-                if _VAT_LINE_MARKERS.search(block["text"]) or _EXCLUDE_TOTAL_REGEX.search(block["text"]):
+                if (_VAT_LINE_MARKERS.search(block["text"])
+                        or _EXCLUDE_TOTAL_REGEX.search(block["text"])):
                     continue
                 amounts = parse_german_amount_cents(block["text"])
                 nearby_amounts.extend(amounts)
@@ -350,7 +365,9 @@ def _extract_total(blocks: list[dict]) -> tuple[int, str]:
     # 3. Largest amount in bottom half, excluding VAT / subtotal lines
     candidates: list[int] = []
     for block in blocks:
-        if block.get("y", 0) > 40.0 and not _VAT_LINE_MARKERS.search(block["text"]) and not _EXCLUDE_TOTAL_REGEX.search(block["text"]):
+        if (block.get("y", 0) > 40.0
+                and not _VAT_LINE_MARKERS.search(block["text"])
+                and not _EXCLUDE_TOTAL_REGEX.search(block["text"])):
             candidates.extend(parse_german_amount_cents(block["text"]))
     if candidates:
         return max(candidates), "fallback_largest_bottom"

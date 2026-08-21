@@ -1,7 +1,7 @@
 import datetime
 import uuid
-from typing import Any, Dict, List, Optional
-from pydantic import BaseModel, Field
+from typing import Any, Dict, Optional
+from pydantic import BaseModel
 
 
 class DocumentResponse(BaseModel):
@@ -18,10 +18,6 @@ class DocumentResponse(BaseModel):
 
     class Config:
         from_attributes = True
-
-
-class DocumentListResponse(BaseModel):
-    documents: List[DocumentResponse]
 
 
 class DocumentUpdate(BaseModel):

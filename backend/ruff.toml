@@ -1,7 +1,9 @@
+line-length = 100
+exclude = ["tests/", "test_*.py", ".venv/"]
+
 [lint]
 select = ["E", "F", "W", "T201"]
 ignore = []
-exclude = ["tests/", "test_*.py", ".venv/"]
 
 [lint.per-file-ignores]
 # Allow print in run.py and test helpers

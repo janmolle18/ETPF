@@ -751,6 +751,7 @@ import {
   triggerStressStep
 } from '../services/api';
 import type { DocumentResponse, StressTestRun } from '../services/api';
+import { getConfColor } from '../lib/color';
 
 const playIcon = Play;
 const maximizeIcon = Maximize2;
@@ -1004,12 +1005,6 @@ const scrollToBottom = () => {
   if (terminalBody.value) {
     terminalBody.value.scrollTop = terminalBody.value.scrollHeight;
   }
-};
-
-const getConfColor = (conf: number) => {
-  if (conf >= 0.9) return 'var(--color-success)';
-  if (conf >= 0.7) return 'var(--color-warning)';
-  return 'var(--color-danger)';
 };
 
 const getAccuracyBg = (acc: number) => {

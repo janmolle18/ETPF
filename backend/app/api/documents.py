@@ -1,6 +1,5 @@
 import logging
 import os
-import re
 import uuid
 import fitz  # PyMuPDF
 from typing import List
@@ -35,14 +34,14 @@ async def process_document_background(doc_id: uuid.UUID, file_path: str) -> None
     async with get_session() as session:
         repo = PostgresDocumentRepository(session)
         processor = get_processor()
-        
+
         try:
             # 1. Update status to PROCESSING
             await repo.update(doc_id, status="PROCESSING")
-            
+
             # 2. Run CV/OCR logic (mocked)
             result = await processor.process(doc_id, file_path)
-            
+
             # 3. Save extracted details and set to COMPLETED
             await repo.update(
                 doc_id,
@@ -68,13 +67,13 @@ async def upload_document(
     """
     # 1. Validate file extension/type
     content_type = file.content_type or "application/octet-stream"
-    
+
     # 2. Create unique file path
     file_id = uuid.uuid4()
     extension = os.path.splitext(file.filename or "")[1]
     safe_filename = f"{file_id}{extension}"
     file_path = os.path.join(settings.UPLOAD_DIR, safe_filename)
-    
+
     # 3. Save file contents
     try:
         with open(file_path, "wb") as f:
@@ -83,17 +82,17 @@ async def upload_document(
     except Exception as e:
         logger.error("Could not save uploaded file: %s", e)
         raise HTTPException(status_code=500, detail="File upload failed. Please try again.")
-    
+
     # 4. Create document record in database
     doc = await repo.create(
         filename=file.filename or "unknown",
         content_type=content_type,
         file_path=file_path
     )
-    
+
     # 5. Enqueue processing task
     background_tasks.add_task(process_document_background, doc.id, file_path)
-    
+
     return doc
 
 
@@ -118,20 +117,20 @@ async def trigger_sandbox_test(
     """
     doc_type = payload.type
     doc_id = uuid.uuid4()
-    
+
     logs = []
     logs.append(f"Initializing sandbox run for: {doc_type.upper()}")
-    
+
     # Define storage folder
     os.makedirs(settings.UPLOAD_DIR, exist_ok=True)
-    
+
     filename = ""
     content_type = ""
     file_path = ""
-    
+
     try:
         from PIL import Image, ImageDraw, ImageFont
-        
+
         # Helper to load system font or fallback
         def get_test_fonts():
             try:
@@ -142,17 +141,17 @@ async def trigger_sandbox_test(
                 font_large = ImageFont.load_default()
                 font_medium = ImageFont.load_default()
             return font_large, font_medium
-            
+
         if doc_type == "png":
             filename = "sandbox_receipt.png"
             content_type = "image/png"
             file_path = os.path.join(settings.UPLOAD_DIR, f"{doc_id}.png")
-            
+
             logs.append("Drawing synthetic receipt canvas with known coordinates (PNG)...")
             img = Image.new("RGB", (800, 1000), color="white")
             draw = ImageDraw.Draw(img)
             f_large, f_medium = get_test_fonts()
-            
+
             draw.text((100, 80), "METRO CASH AND CARRY", fill="black", font=f_large)
             draw.text((100, 150), "Tel: +49 30 123456", fill="black", font=f_medium)
             draw.text((100, 200), "DE123456789", fill="black", font=f_medium)
@@ -160,19 +159,19 @@ async def trigger_sandbox_test(
             draw.text((100, 450), "Premium USB-C Hub   x1", fill="black", font=f_medium)
             draw.text((600, 450), "59.99 EUR", fill="black", font=f_medium)
             draw.text((400, 650), "SUMME: 59.99 EUR", fill="black", font=f_large)
-            
+
             img.save(file_path)
             logs.append(f"Saved synthetic PNG file to storage: {file_path}")
-            
+
         elif doc_type == "pdf_digital":
             filename = "sandbox_digital.pdf"
             content_type = "application/pdf"
             file_path = os.path.join(settings.UPLOAD_DIR, f"{doc_id}.pdf")
-            
+
             logs.append("Generating synthetic PDF document with digital text layers...")
             doc_pdf = fitz.open()
             page = doc_pdf.new_page(width=800, height=1000)
-            
+
             page.insert_text((100, 80), "METRO CASH AND CARRY", fontsize=36)
             page.insert_text((100, 150), "Tel: +49 30 123456", fontsize=26)
             page.insert_text((100, 200), "DE123456789", fontsize=26)
@@ -180,21 +179,21 @@ async def trigger_sandbox_test(
             page.insert_text((100, 450), "Premium USB-C Hub   x1", fontsize=26)
             page.insert_text((600, 450), "59.99 EUR", fontsize=26)
             page.insert_text((400, 650), "SUMME: 59.99 EUR", fontsize=36)
-            
+
             doc_pdf.save(file_path)
             doc_pdf.close()
             logs.append(f"Saved searchable PDF file to storage: {file_path}")
-            
+
         elif doc_type == "pdf_scanned":
             filename = "sandbox_scanned.pdf"
             content_type = "application/pdf"
             file_path = os.path.join(settings.UPLOAD_DIR, f"{doc_id}.pdf")
-            
+
             logs.append("Drawing synthetic receipt canvas and rendering image page...")
             img = Image.new("RGB", (800, 1000), color="white")
             draw = ImageDraw.Draw(img)
             f_large, f_medium = get_test_fonts()
-            
+
             draw.text((100, 80), "METRO CASH AND CARRY", fill="black", font=f_large)
             draw.text((100, 150), "Tel: +49 30 123456", fill="black", font=f_medium)
             draw.text((100, 200), "DE123456789", fill="black", font=f_medium)
@@ -202,44 +201,47 @@ async def trigger_sandbox_test(
             draw.text((100, 450), "Premium USB-C Hub   x1", fill="black", font=f_medium)
             draw.text((600, 450), "59.99 EUR", fill="black", font=f_medium)
             draw.text((400, 650), "SUMME: 59.99 EUR", fill="black", font=f_large)
-            
+
             # Save PIL to temporary bytes in memory
             import io
             img_byte_arr = io.BytesIO()
             img.save(img_byte_arr, format='PNG')
             img_bytes = img_byte_arr.getvalue()
-            
+
             logs.append("Wrapping image bytes inside PDF page template (scanned)...")
             doc_pdf = fitz.open()
             page = doc_pdf.new_page(width=800, height=1000)
             page.insert_image(page.rect, stream=img_bytes)
-            
+
             doc_pdf.save(file_path)
             doc_pdf.close()
             logs.append(f"Saved scanned PDF wrapper to storage: {file_path}")
-            
+
         elif doc_type == "jpg":
             filename = "musterrechnung-6p.jpg"
             content_type = "image/jpeg"
             file_path = os.path.join(settings.UPLOAD_DIR, f"{doc_id}.jpg")
-            
-            fixture_src = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "static", "fixtures", "musterrechnung-6p.jpg")
+
+            fixture_src = os.path.join(
+                os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+                "static", "fixtures", "musterrechnung-6p.jpg"
+            )
             if not os.path.exists(fixture_src):
                 logger.warning("Sandbox fixture not found at: %s", fixture_src)
                 raise HTTPException(status_code=404, detail="Sandbox fixture file not available.")
-                
+
             import shutil
             shutil.copy(fixture_src, file_path)
             logs.append(f"Loaded static fixture invoice image from: {fixture_src}")
             logs.append(f"Copied test file to upload directory: {file_path}")
-            
+
         else:
             raise HTTPException(status_code=400, detail="Invalid sandbox type requested")
-            
+
     except Exception as ex:
         logs.append(f"Error creating synthetic file: {ex}")
         raise HTTPException(status_code=500, detail=f"Sandbox initialization failed: {ex}")
-        
+
     # Register in DB
     logs.append("Registering document in PostgreSQL database...")
     doc = await repo.create(
@@ -249,16 +251,16 @@ async def trigger_sandbox_test(
     )
     doc_id = doc.id
     logs.append(f"Created database entry with ID: {doc_id}")
-    
+
     # Process document synchronously for the sandbox to return the logs/results immediately
     logs.append("Triggering document processor...")
     processor = get_processor()
-    
+
     try:
         # 1. Update status to PROCESSING
         await repo.update(doc_id, status="PROCESSING")
         logs.append("Processor state updated to: PROCESSING")
-        
+
         # 2. Inspect document page layout details
         if doc_type == "pdf_digital":
             logs.append("Opening PDF via PyMuPDF...")
@@ -271,23 +273,27 @@ async def trigger_sandbox_test(
             logs.append("No digital text layer found (0 characters detected)")
             logs.append("Running Mode B: Rendering page 1 to high-resolution PNG image...")
             logs.append("Executing neural EasyOCR text recognition network (CPU/GPU)...")
-            logs.append("EasyOCR detected 8 text blocks successfully")
         else:
             logs.append("Opening image file...")
             logs.append("Executing neural EasyOCR text recognition network (CPU/GPU)...")
-            logs.append("EasyOCR detected 8 text blocks successfully")
-            
-        logs.append("Running coordinates converter: Mapping absolute bounds to layout percentages...")
-        
+
         # 3. Process the file
         result = await processor.process(doc_id, file_path)
-        
+
+        if doc_type != "pdf_digital":
+            block_count = len(result["layout_data"]["blocks"])
+            logs.append(f"EasyOCR detected {block_count} text blocks successfully")
+
+        logs.append(
+            "Running coordinates converter: Mapping absolute bounds to layout percentages..."
+        )
+
         # 4. Heuristics extraction logs
         logs.append("Running extraction heuristics parser...")
         logs.append(f"Extracted Vendor: {result['extracted_data']['vendor_name']}")
         logs.append(f"Extracted Date: {result['extracted_data']['date']}")
         logs.append(f"Extracted Total: {result['extracted_data']['total_amount']} EUR")
-        
+
         # 5. Save results to DB
         await repo.update(
             doc_id,
@@ -297,12 +303,12 @@ async def trigger_sandbox_test(
             extracted_data=result["extracted_data"]
         )
         logs.append("Successfully saved result payload. Status: COMPLETED")
-        
+
     except Exception as e:
         logs.append(f"Processor Error: {e}")
         await repo.update(doc_id, status="FAILED")
         logs.append("Document status set to FAILED")
-        
+
     return {
         "document_id": str(doc_id),
         "logs": logs
@@ -342,7 +348,7 @@ async def trigger_sandbox_stress_step(
 
         processor = get_processor()
         doc_id = uuid.uuid4()
-        
+
         run_res = await execute_degradation_run(
             doc_id=doc_id,
             degradation_type=payload.degradation,
@@ -377,14 +383,14 @@ async def delete_document(
     doc = await repo.get_by_id(doc_id)
     if not doc:
         raise HTTPException(status_code=404, detail="Document not found")
-        
+
     # Remove file from disk if it exists
     if os.path.exists(doc.file_path):
         try:
             os.remove(doc.file_path)
         except Exception as e:
             logger.warning("Error removing file during delete: %s", e)
-            
+
     # Delete DB record
     success = await repo.delete(doc_id)
     if not success:
@@ -404,7 +410,7 @@ async def get_document_file(
         raise HTTPException(status_code=404, detail="Document not found")
     if not os.path.exists(doc.file_path):
         raise HTTPException(status_code=404, detail="File not found on server")
-        
+
     if preview and doc.content_type == "application/pdf":
         try:
             # Render first page of PDF to in-memory PNG bytes
@@ -419,7 +425,7 @@ async def get_document_file(
             logger.warning("Error generating PDF preview: %s", e)
             # Fall back to original file response on error
             pass
-            
+
     return FileResponse(doc.file_path, media_type=doc.content_type)
 
 
@@ -434,7 +440,7 @@ async def update_document(
     doc = await repo.get_by_id(doc_id)
     if not doc:
         raise HTTPException(status_code=404, detail="Document not found")
-    
+
     update_data = updates.model_dump(exclude_unset=True)
     updated_doc = await repo.update(doc_id, **update_data)
     if not updated_doc:

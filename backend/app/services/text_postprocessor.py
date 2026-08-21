@@ -1,5 +1,5 @@
 import re
-from typing import List, Tuple, Dict, Any
+from typing import List, Tuple, Dict
 
 class PostprocessingRule:
     name: str = "BaseRule"
@@ -22,7 +22,7 @@ class QuantityMultiplierRule(PostprocessingRule):
         # Match 'Ix', 'IX', 'lx', 'Ix ' at word boundary
         # e.g., 'Ix Aqua Frizzante' -> '1x Aqua Frizzante', 'Ix Pizza' -> '1x Pizza'
         pattern = r'(?i)\b[il]x\b'
-        
+
         def replacer(match):
             original = match.group(0)
             changes.append(f"Fixed quantity multiplier '{original}' -> '1x'")
@@ -76,7 +76,8 @@ class AlphanumericContextRule(PostprocessingRule):
                     modified = True
 
             # Date pattern e.g., '1O.07.2O26' -> '10.07.2026'
-            if re.search(r'\d{1,2}[\.,]\d{1,2}[\.,]\d{4}', word.replace('O', '0').replace('o', '0')):
+            normalized = word.replace('O', '0').replace('o', '0')
+            if re.search(r'\d{1,2}[\.,]\d{1,2}[\.,]\d{4}', normalized):
                 new_word = word.replace('O', '0').replace('o', '0')
                 if new_word != word:
                     changes.append(f"Fixed date digits '{word}' -> '{new_word}'")
@@ -90,17 +91,17 @@ class AlphanumericContextRule(PostprocessingRule):
 
 class CurrencySymbolRule(PostprocessingRule):
     name = "Currency Symbol Normalizer"
-    description = "Fixes letter s or S misread as currency symbol $ before price numbers"
+    description = "Fixes letter s or S misread as currency symbol before price numbers (EUR)"
 
     def apply(self, text: str) -> Tuple[str, bool, List[str]]:
         changes = []
-        # Match 's0.00', 'S5.40', 'USDs0.00' where letter s/S precedes digits and decimal
+        # Match 's0.00', 'S5.40' where letter s/S precedes digits and decimal
         pattern = r'\b[sS](\d+[\.,]\d{2})\b'
 
         def replacer(match):
             original = match.group(0)
             amount = match.group(1)
-            fixed = f"${amount}"
+            fixed = f"€{amount}"
             changes.append(f"Fixed currency symbol '{original}' -> '{fixed}'")
             return fixed
 

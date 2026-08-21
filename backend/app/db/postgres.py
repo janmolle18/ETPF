@@ -1,7 +1,7 @@
 import logging
 import uuid
 from typing import Any, List, Optional
-from sqlalchemy import select, delete
+from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine, async_sessionmaker
 from app.core.config import settings
 from app.db.models import Base, Document
@@ -81,11 +81,11 @@ class PostgresDocumentRepository(BaseDocumentRepository):
         doc = await self.get_by_id(doc_id)
         if not doc:
             return None
-        
+
         for key, value in kwargs.items():
             if hasattr(doc, key):
                 setattr(doc, key, value)
-                
+
         await self.session.commit()
         await self.session.refresh(doc)
         return doc
@@ -94,7 +94,7 @@ class PostgresDocumentRepository(BaseDocumentRepository):
         doc = await self.get_by_id(doc_id)
         if not doc:
             return False
-            
+
         await self.session.delete(doc)
         await self.session.commit()
         return True

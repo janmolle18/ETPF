@@ -5,7 +5,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 class Settings(BaseSettings):
     API_V1_STR: str = "/api/v1"
     PROJECT_NAME: str = "ETPF (Extendable Tax processing Framework)"
-    
+
     # CORS
     BACKEND_CORS_ORIGINS: list[str] = [
         "http://localhost:5173",  # Vue dev server

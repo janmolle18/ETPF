@@ -323,6 +323,7 @@ import {
 } from '@lucide/vue';
 import type { DocumentResponse } from '../services/api';
 import { getDocumentFileUrl } from '../services/api';
+import { getConfColor } from '../lib/color';
 
 const props = defineProps<{
   document: DocumentResponse | null;
@@ -387,13 +388,6 @@ const copyRawText = () => {
     alert('Copied to clipboard!');
   }
 };
-
-const getConfColor = (conf: number) => {
-  if (conf >= 0.9) return 'var(--color-success)';
-  if (conf >= 0.7) return 'var(--color-warning)';
-  return 'var(--color-danger)';
-};
-
 
 </script>
 

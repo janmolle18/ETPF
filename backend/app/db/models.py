@@ -57,17 +57,3 @@ class Document(Base):
         default=_utc_now,
         onupdate=_utc_now,
     )
-
-    def to_dict(self) -> Dict[str, Any]:
-        return {
-            "id": str(self.id),
-            "filename": self.filename,
-            "content_type": self.content_type,
-            "status": self.status,
-            "file_path": self.file_path,
-            "raw_text": self.raw_text,
-            "layout_data": self.layout_data,
-            "extracted_data": self.extracted_data,
-            "created_at": self.created_at.isoformat() if self.created_at else None,
-            "updated_at": self.updated_at.isoformat() if self.updated_at else None,
-        }

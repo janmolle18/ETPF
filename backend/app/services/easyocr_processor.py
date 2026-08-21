@@ -33,7 +33,8 @@ def get_easyocr_reader() -> easyocr.Reader:
 def detect_and_deskew_image(pil_img: Image.Image) -> tuple[Image.Image, dict]:
     """
     Detects document text line skew angle using horizontal morphological dilation
-    and line contour minAreaRect angles. Rotates the image so text baselines align to 0.0° horizontal.
+    and line contour minAreaRect angles. Rotates the image so text baselines
+    align to 0.0° horizontal.
     """
     import cv2
     import numpy as np
@@ -97,9 +98,12 @@ def detect_and_deskew_image(pil_img: Image.Image) -> tuple[Image.Image, dict]:
             }
 
         # In Pillow, rotate(deg) rotates counter-clockwise.
-        # When text lines are tilted counter-clockwise (median_angle < 0), rotate(median_angle) rotates clockwise to deskew to 0°.
+        # When text lines are tilted counter-clockwise (median_angle < 0),
+        # rotate(median_angle) rotates clockwise to deskew to 0°.
         correction_angle = median_angle
-        deskewed_img = pil_img.rotate(correction_angle, resample=Image.BICUBIC, expand=False, fillcolor=(255, 255, 255))
+        deskewed_img = pil_img.rotate(
+            correction_angle, resample=Image.BICUBIC, expand=False, fillcolor=(255, 255, 255)
+        )
 
         return deskewed_img, {
             "detected_angle_deg": round(median_angle, 2),
@@ -160,9 +164,10 @@ def _clean_alphanumeric_text(text: str) -> str:
     """
     words = text.split()
     cleaned_words = []
-    
+
     for word in words:
-        # Run replacement loops until string stabilizes (covers multi-char confusions like 'oo' -> '00')
+        # Run replacement loops until string stabilizes
+        # (covers multi-char confusions like 'oo' -> '00')
         prev = ""
         while prev != word:
             prev = word
@@ -170,9 +175,9 @@ def _clean_alphanumeric_text(text: str) -> str:
             word = re.sub(r'(?<=\d)[oO]|[oO](?=\d)', '0', word)
             # Replace l/I with 1 if preceded or followed by any digit
             word = re.sub(r'(?<=\d)[lI]|[lI](?=\d)', '1', word)
-            
+
         cleaned_words.append(word)
-        
+
     return " ".join(cleaned_words)
 
 
@@ -199,7 +204,7 @@ class EasyOCRDocumentProcessor(BaseDocumentProcessor):
                 try:
                     if len(doc) == 0:
                         raise ValueError("The PDF document is empty.")
-                    
+
                     # Load first page
                     page = doc.load_page(0)
                     page_rect = page.rect
@@ -222,17 +227,21 @@ class EasyOCRDocumentProcessor(BaseDocumentProcessor):
                         # Mode B: Scanned PDF layout extraction
                         # Render page 1 to a high-res PNG (2.0x zoom)
                         pix = page.get_pixmap(matrix=fitz.Matrix(2.0, 2.0))
-                        temp_image_path = os.path.join(os.path.dirname(file_path), f"temp_{document_id}.png")
+                        temp_image_path = os.path.join(
+                            os.path.dirname(file_path), f"temp_{document_id}.png"
+                        )
                         pix.save(temp_image_path)
-                        
+
                         # Preprocess rendered PNG
-                        preprocessed_path = os.path.join(os.path.dirname(file_path), f"prep_{document_id}.png")
+                        preprocessed_path = os.path.join(
+                            os.path.dirname(file_path), f"prep_{document_id}.png"
+                        )
                         deskew_stats = _preprocess_image_file(temp_image_path, preprocessed_path)
-                        
+
                         # Update dimensions to preprocessed PNG size for calculations
                         with Image.open(preprocessed_path) as temp_img:
                             img_w, img_h = temp_img.size
-                        
+
                         # Run EasyOCR on the preprocessed image
                         ocr_results = await asyncio.to_thread(_run_ocr_sync, preprocessed_path)
                 finally:
@@ -240,12 +249,14 @@ class EasyOCRDocumentProcessor(BaseDocumentProcessor):
             else:
                 # Standard Image Processing (PNG/JPG)
                 # Preprocess image file
-                preprocessed_path = os.path.join(os.path.dirname(file_path), f"prep_{document_id}.png")
+                preprocessed_path = os.path.join(
+                    os.path.dirname(file_path), f"prep_{document_id}.png"
+                )
                 deskew_stats = _preprocess_image_file(file_path, preprocessed_path)
-                
+
                 with Image.open(preprocessed_path) as img:
                     img_w, img_h = img.size
-                
+
                 # Run EasyOCR on the preprocessed image
                 ocr_results = await asyncio.to_thread(_run_ocr_sync, preprocessed_path)
 
@@ -264,35 +275,35 @@ class EasyOCRDocumentProcessor(BaseDocumentProcessor):
                         "ymin": ymin, "ymax": ymax,
                         "text": clean_text, "confidence": float(confidence)
                     })
-            
+
             # Sort raw blocks by vertical center first, then horizontal start
             raw_blocks.sort(key=lambda b: (b["ymin"], b["xmin"]))
-            
+
             # Merge adjacent horizontal blocks on the same line (dontsplit)
             merged_blocks = []
             for block in raw_blocks:
                 if not merged_blocks:
                     merged_blocks.append(block)
                     continue
-                
+
                 last = merged_blocks[-1]
-                
+
                 # Check vertical overlap
                 y_overlap = min(last["ymax"], block["ymax"]) - max(last["ymin"], block["ymin"])
                 last_h = last["ymax"] - last["ymin"]
                 block_h = block["ymax"] - block["ymin"]
                 min_h = min(last_h, block_h)
-                
+
                 is_same_line = False
                 if min_h > 0:
                     overlap_ratio = y_overlap / min_h
                     if overlap_ratio > 0.40 or abs(last["ymin"] - block["ymin"]) < (img_h * 0.02):
                         is_same_line = True
-                
+
                 # Check horizontal gap closeness (group if gap is within 18% of image width)
                 x_gap = block["xmin"] - last["xmax"]
                 is_horizontally_close = x_gap < (img_w * 0.18)
-                
+
                 if is_same_line and is_horizontally_close:
                     last["xmax"] = max(last["xmax"], block["xmax"])
                     last["ymin"] = min(last["ymin"], block["ymin"])
@@ -301,18 +312,18 @@ class EasyOCRDocumentProcessor(BaseDocumentProcessor):
                     last["confidence"] = (last["confidence"] + block["confidence"]) / 2.0
                 else:
                     merged_blocks.append(block)
-            
+
             # Convert merged blocks to percentages
             layout_blocks = []
             for b in merged_blocks:
                 box_w = b["xmax"] - b["xmin"]
                 box_h = b["ymax"] - b["ymin"]
-                
+
                 x_pct = (b["xmin"] / img_w) * 100.0 if img_w > 0 else 0.0
                 y_pct = (b["ymin"] / img_h) * 100.0 if img_h > 0 else 0.0
                 w_pct = (box_w / img_w) * 100.0 if img_w > 0 else 0.0
                 h_pct = (box_h / img_h) * 100.0 if img_h > 0 else 0.0
-                
+
                 layout_blocks.append({
                     "text": b["text"],
                     "x": round(max(0.0, min(100.0, x_pct)), 2),
@@ -342,8 +353,12 @@ class EasyOCRDocumentProcessor(BaseDocumentProcessor):
             # Extract metadata fields via heuristics engine
             extracted = extract_fields(layout_blocks)
 
-            total_amount = round(extracted["total_amount"] / 100.0, 2) if extracted["total_amount"] else 0.0
-            tax_amount = round(extracted["tax_amount"] / 100.0, 2) if extracted["tax_amount"] else 0.0
+            total_amount = (
+                round(extracted["total_amount"] / 100.0, 2) if extracted["total_amount"] else 0.0
+            )
+            tax_amount = (
+                round(extracted["tax_amount"] / 100.0, 2) if extracted["tax_amount"] else 0.0
+            )
 
             line_items = [
                 {
