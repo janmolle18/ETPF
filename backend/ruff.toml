@@ -8,3 +8,6 @@ ignore = []
 [lint.per-file-ignores]
 # Allow print in run.py and test helpers
 "run.py" = ["T201"]
+# The degradation harness doubles as a CLI (python -m app.services.degradations),
+# so its report progress output goes to stdout on purpose.
+"app/services/degradations.py" = ["T201"]

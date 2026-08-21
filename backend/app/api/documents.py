@@ -324,7 +324,7 @@ async def trigger_sandbox_stress_test(
     returning character accuracy, block count, and timing results.
     """
     try:
-        from test_degradations import run_stress_test_suite
+        from app.services.degradations import run_stress_test_suite
         # Run a subset of 5 tests synchronously to present results quickly in the UI
         results = await run_stress_test_suite(subset=True, repo=repo)
         return results
@@ -343,7 +343,7 @@ async def trigger_sandbox_stress_step(
     and returns the run results (document_id, accuracy, latency, block count).
     """
     try:
-        from test_degradations import execute_degradation_run
+        from app.services.degradations import execute_degradation_run
         import uuid
 
         processor = get_processor()

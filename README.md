@@ -149,8 +149,8 @@ ETPF/
 │   │       ├── base.py            # BaseDocumentProcessor ABC
 │   │       ├── easyocr_processor.py   # OCR + line-merge + metadata extraction
 │   │       ├── mock_processor.py      # Mock for canvas testing
-│   │       └── self_healing_ocr.py    # Reverse-degradation optimizer
-│   ├── test_degradations.py       # Stress-test harness
+│   │       ├── self_healing_ocr.py    # Reverse-degradation optimizer
+│   │       └── degradations.py        # Stress-test harness (also a CLI)
 │   ├── storage/                   # Uploaded files (auto-created)
 │   └── run.py
 └── frontend/src/

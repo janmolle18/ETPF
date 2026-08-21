@@ -4,7 +4,7 @@ import re
 import sys
 import uuid
 import random
-from PIL import Image, ImageDraw, ImageFont, ImageFilter, ImageEnhance
+from PIL import Image, ImageDraw, ImageFont, ImageEnhance
 
 # Reconfigure stdout for Windows console UTF-8 support
 if sys.platform.startswith('win'):
@@ -92,7 +92,7 @@ def levenshtein_distance(s1: str, s2: str) -> int:
         return levenshtein_distance(s2, s1)
     if len(s2) == 0:
         return len(s1)
-        
+
     previous_row = range(len(s2) + 1)
     for i, c1 in enumerate(s1):
         current_row = [i + 1]
@@ -102,12 +102,14 @@ def levenshtein_distance(s1: str, s2: str) -> int:
             substitutions = previous_row[j] + (c1 != c2)
             current_row.append(min(insertions, deletions, substitutions))
         previous_row = current_row
-        
+
     return previous_row[-1]
 
 
 def substring_similarity(block_text: str, gt: str) -> float:
-    """Slides a matching window across gt to find the best substring alignment accuracy with normalized whitespace."""
+    """Slide a matching window across gt to find the best substring alignment
+    accuracy, with normalized whitespace.
+    """
     norm_block = re.sub(r'\s+', ' ', block_text).strip().lower()
     norm_gt = re.sub(r'\s+', ' ', gt).strip().lower()
 
@@ -115,11 +117,11 @@ def substring_similarity(block_text: str, gt: str) -> float:
     g_len = len(norm_gt)
     if b_len == 0 or g_len == 0:
         return 0.0
-        
+
     if b_len >= g_len:
         dist = levenshtein_distance(norm_block, norm_gt)
         return max(0.0, 1.0 - (dist / b_len))
-        
+
     best_sim = 0.0
     # Slide window representing the length of the block (+/- 3 characters buffer)
     for length in range(max(1, b_len - 3), min(g_len, b_len + 4)):
@@ -138,12 +140,12 @@ def compute_ocr_accuracy(ground_truth_lines: list[str], ocr_blocks: list[dict]) 
         return 0.0
     if not ocr_blocks:
         return 0.0
-        
+
     total_accuracy = 0.0
     for gt in ground_truth_lines:
         norm_gt = re.sub(r'\s+', ' ', gt).strip().lower()
         best_line_acc = 0.0
-        
+
         # 1. Single block similarity against ground truth line
         for block in ocr_blocks:
             parsed_text = block["text"]
@@ -163,18 +165,20 @@ def compute_ocr_accuracy(ground_truth_lines: list[str], ocr_blocks: list[dict]) 
             combined_sim = max(0.0, 1.0 - (dist / max_len)) if max_len > 0 else 1.0
             if combined_sim > best_line_acc:
                 best_line_acc = combined_sim
-                
+
         total_accuracy += best_line_acc
-        
+
     return (total_accuracy / len(ground_truth_lines)) * 100.0
 
 
 def generate_base_receipt(degradation_type: str) -> Image.Image:
-    """Generates a high-quality base synthetic receipt with crisp text specific to a degradation stage."""
+    """Generate a high-quality base synthetic receipt with crisp text,
+    specific to a degradation stage.
+    """
     width, height = 800, 1000
     img = Image.new("RGB", (width, height), color="white")
     draw = ImageDraw.Draw(img)
-    
+
     # Load fonts
     try:
         f_large = ImageFont.truetype("arial.ttf", 36)
@@ -182,19 +186,19 @@ def generate_base_receipt(degradation_type: str) -> Image.Image:
     except IOError:
         f_large = ImageFont.load_default()
         f_medium = ImageFont.load_default()
-        
+
     lines = GROUND_TRUTHS.get(degradation_type, GROUND_TRUTHS["rotation"])
-    
+
     # Draw texts dynamically
     draw.text((100, 100), lines[0], fill="black", font=f_large)
     draw.text((100, 200), lines[1], fill="black", font=f_medium)
     draw.text((100, 300), lines[2], fill="black", font=f_medium)
-    
+
     draw.text((100, 480), lines[3], fill="black", font=f_medium)
     draw.text((100, 530), lines[4], fill="black", font=f_medium)
-    
+
     draw.text((380, 680), lines[5], fill="black", font=f_large)
-    
+
     return img
 
 
@@ -214,7 +218,10 @@ def apply_shear_stretch(img: Image.Image, shear_x: float) -> Image.Image:
     # Shift top right coordinate to introduce horizontal skewing
     x_shift = width * shear_x
     coeffs = (1, shear_x, -x_shift / 2, 0, 1, 0)
-    return img.transform((width, height), Image.AFFINE, coeffs, resample=Image.BICUBIC, fillcolor="white")
+    return img.transform(
+        (width, height), Image.AFFINE, coeffs,
+        resample=Image.BICUBIC, fillcolor="white",
+    )
 
 
 def apply_motion_blur(img: Image.Image, radius: int) -> Image.Image:
@@ -239,7 +246,7 @@ def apply_crumpled_creases(img: Image.Image, num_creases: int) -> Image.Image:
     width, height = img.size
     draw = ImageDraw.Draw(img)
     random.seed(42) # Deterministic creases
-    
+
     for _ in range(num_creases):
         x1 = random.randint(0, width)
         y1 = random.randint(0, height)
@@ -259,12 +266,12 @@ def apply_shadow_lighting(img: Image.Image, shadow_level: int) -> Image.Image:
     width, height = img.size
     mask = Image.new("L", (width, height), color=255)
     m_draw = ImageDraw.Draw(mask)
-    
+
     for y in range(height):
         # Linearly dim brightness down to shadow level at the bottom
         brightness = int(255 - (y / height) * shadow_level)
         m_draw.line([(0, y), (width, y)], fill=max(0, brightness))
-        
+
     return Image.composite(img, Image.new("RGB", (width, height), color="black"), mask)
 
 
@@ -277,7 +284,7 @@ async def execute_degradation_run(
 ) -> dict:
     """Generates, degrades, processes, and scores a single test case."""
     base_img = generate_base_receipt(degradation_type)
-    
+
     # Apply selected filter
     if degradation_type == "rotation":
         degraded = apply_rotation(base_img, angle=level)
@@ -301,7 +308,7 @@ async def execute_degradation_run(
         temp = enhancer.enhance(level)
         temp = apply_motion_blur(temp, radius=1)
         degraded = apply_crumpled_creases(temp, num_creases=15)
-        
+
         # Add pixel noise to simulate cheap photocopy scanner sensor
         width, height = degraded.size
         pixels = degraded.load()
@@ -312,12 +319,12 @@ async def execute_degradation_run(
             pixels[x, y] = (165, 165, 165)
     else:
         degraded = base_img
-        
+
     # Save degraded image to disk
     os.makedirs(settings.UPLOAD_DIR, exist_ok=True)
     file_path = os.path.join(settings.UPLOAD_DIR, f"{doc_id}.png")
     degraded.save(file_path)
-    
+
     # Save formatted name
     label = f"{level}"
     if degradation_type == "shear":
@@ -347,13 +354,13 @@ async def execute_degradation_run(
         )
         db_doc_id = db_doc.id
         await repo.update(db_doc_id, status="PROCESSING")
-    
+
     # Process file through OCR
     import time
     start_t = time.time()
     result = await processor.process(db_doc_id, file_path)
     duration_ms = (time.time() - start_t) * 1000.0
-    
+
     # Attach block-by-block text matching similarity accuracy using substring window matching
     lines = GROUND_TRUTHS.get(degradation_type, GROUND_TRUTHS["rotation"])
     for block in result["layout_data"]["blocks"]:
@@ -384,14 +391,14 @@ async def execute_degradation_run(
             layout_data=result["layout_data"],
             extracted_data=result["extracted_data"]
         )
-            
+
     # Calculate overall document accuracy (Match value)
     accuracy = compute_ocr_accuracy(lines, result["layout_data"]["blocks"])
-    
+
     # Calculate average model confidence score
     blocks = result["layout_data"]["blocks"]
     avg_conf = (sum(b["confidence"] for b in blocks) / len(blocks)) * 100.0 if blocks else 0.0
-        
+
     return {
         "document_id": str(db_doc_id) if repo is not None else None,
         "degradation": degradation_type,
@@ -429,7 +436,7 @@ async def run_stress_test_suite(subset: bool = False, repo = None) -> list[dict]
     """Runs the full or subset stress test matrix."""
     processor = EasyOCRDocumentProcessor()
     results = []
-    
+
     # Define test parameters matrix
     if subset:
         # A quick subset of 8 tests for UI snappy loading including compound types
@@ -449,34 +456,34 @@ async def run_stress_test_suite(subset: bool = False, repo = None) -> list[dict]
             ("rotation", 0.0),
             ("rotation", 5.0),
             ("rotation", 12.0),
-            
+
             ("shear", 0.0),
             ("shear", 0.15),
             ("shear", 0.30),
-            
+
             ("motion_blur", 0.0),
             ("motion_blur", 2.0),
             ("motion_blur", 4.0),
-            
+
             ("creases", 0.0),
             ("creases", 20.0),
             ("creases", 45.0),
-            
+
             ("shadow", 0.0),
             ("shadow", 100.0),
             ("shadow", 200.0),
-            
+
             ("dark_blur", 160.0),
             ("crumpled_skew", 25.0),
             ("faded_thermal", 0.25)
         ]
-        
+
     for idx, (degr, lvl) in enumerate(matrix):
         print(f"Running Stress Case #{idx+1}: {degr.upper()} level {lvl}...")
         test_id = uuid.uuid4()
         run_res = await execute_degradation_run(test_id, degr, lvl, processor, repo=repo)
         results.append(run_res)
-        
+
     return results
 
 
@@ -485,28 +492,38 @@ async def main():
     start_time = asyncio.get_event_loop().time()
     runs = await run_stress_test_suite(subset=False)
     duration = asyncio.get_event_loop().time() - start_time
-    
+
     # Generate scorecard markdown report
     report_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "storage")
     os.makedirs(report_dir, exist_ok=True)
     report_path = os.path.join(report_dir, "degradation_report.md")
-    
+
     with open(report_path, "w", encoding="utf-8") as f:
         f.write("# OCR Degradation Scorecard Report\n\n")
-        f.write(f"Executed stress testing suite over **{len(runs)}** variations in **{duration:.2f} seconds**.\n\n")
-        
+        f.write(
+            f"Executed stress testing suite over **{len(runs)}** variations "
+            f"in **{duration:.2f} seconds**.\n\n"
+        )
+
         # Write tables
-        f.write("| Degradation Type | Intensity Level | OCR Character Accuracy | OCR Blocks | Time (ms) |\n")
+        f.write(
+            "| Degradation Type | Intensity Level | OCR Character Accuracy "
+            "| OCR Blocks | Time (ms) |\n"
+        )
         f.write("| --- | --- | --- | --- | --- |\n")
         for run in runs:
-            f.write(f"| {run['degradation'].capitalize()} | {run['label']} | **{run['accuracy']}%** | {run['blocks_found']} | {run['time_ms']} |\n")
-            
+            f.write(
+                f"| {run['degradation'].capitalize()} | {run['label']} "
+                f"| **{run['accuracy']}%** | {run['blocks_found']} "
+                f"| {run['time_ms']} |\n"
+            )
+
         f.write("\n\n## Limits Mapping Analysis\n")
         f.write("- **Perfect Baseline**: Accuracy is expected at 100% when degradation is 0.\n")
         f.write("- **Motion Blur Limit**: Evaluates standard camera smudge limits.\n")
         f.write("- **Shearing Limit**: Tests parsing resilience when stretched or skewed.\n")
         f.write("- **Illumination Limit**: Evaluates print readability in shadows.\n")
-        
+
     print(f"\nDone! Saved scorecard report to: {report_path}")
 
 if __name__ == "__main__":
